@@ -7,11 +7,11 @@ const govukPrototypeKit = require('govuk-prototype-kit')
 const router = govukPrototypeKit.requests.setupRouter()
 
 // Routes with branching logic
-router.post('/contact-organisation', (req, res, next) => {
-  if (req.body.actingOnBehalfOf === 'Yes') {
+router.post('/their-organisation', (req, res, next) => {
+  if (req.session.data['onBehalfOf'] === 'yes') {
     next()
   } else {
-    return res.redirect('/site-boundary-choice')
+    return res.redirect('/your-organisation')
   }
 })
 
