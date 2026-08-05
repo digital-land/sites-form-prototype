@@ -43,14 +43,36 @@ router.post('/your-connection', (req, res, next) => {
 
 
 
-router.post('/site-boundary-choice', (req, res) => {
-  if (req.body.siteBoundaryChoice === 'draw') {
+router.post('/find-address', (req, res, next) => {
+  if (req.session.data['siteBoundaryChoice'] === 'postcode') {
+    next()
+  } else if (req.session.data['siteBoundaryChoice'] === 'map') {
     return res.redirect('/site-boundary')
-  } else if (req.body.siteBoundaryChoice === 'upload') {
-    return res.redirect('/upload-boundary')
-  } else if (req.body.siteBoundaryChoice === 'findAddress') {
-    return res.redirect('/find-address')
-  } else {
-    res.render('/site-boundary-choice')
   }
 })
+
+router.post('/constraint-flood-zone-1', (req, res, next) => {
+  if (req.session.data['floodZone1ConstraintResponse'] === 'yes') {
+    return res.redirect('/constraint-flood-zone-1-how')
+  } else if (req.session.data['floodZone1ConstraintResponse'] === 'no') {
+    return res.redirect('/site-constraints')
+  }
+})
+
+router.post('/constraint-conservation-area', (req, res, next) => {
+  if (req.session.data['conservationAreaConstraintResponse'] === 'yes') {
+    return res.redirect('/constraint-conservation-area-how')
+  } else if (req.session.data['conservationAreaConstraintResponse'] === 'no') {
+    return res.redirect('/site-constraints')
+  }
+})
+
+router.post('/other-constraints', (req, res, next) => {
+  if (req.session.data['hasOtherConstraints'] === 'yes') {
+    return res.redirect('/other-constraints-details')
+  } else if (req.session.data['hasOtherConstraints'] === 'no') {
+    return res.redirect('/current-use')
+  }
+})
+
+

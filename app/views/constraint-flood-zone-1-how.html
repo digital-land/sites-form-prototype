@@ -1,0 +1,59 @@
+{% extends "layouts/borchester.html" %}
+
+{% set pageName = "How will you mitigate the flood zone constraint?" %}
+
+{% block pageTitle %}
+  {{ pageName }} – {{ serviceName }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">{{ pageName }}</h1>
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Reference"
+            },
+            value: {
+              text: "Alluvial flood plain"
+            }
+          }
+        ]
+      })}}
+      
+      <form class="form" action="/site-constraints" method="post">
+        {{ govukCharacterCount({
+          name: "conservationAreaMitigation",
+          value: data['conservationAreaMitigation'],
+          maxwords: 200,
+          label: {
+            text: pageName,
+            classes: "govuk-label--m"
+          }
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Continue"
+          }) }}
+
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          }) }}
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

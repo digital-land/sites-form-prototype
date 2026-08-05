@@ -17,6 +17,10 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l">{{ pageName }}</h1>
+
+      <p>Planning constraints might limit how you can develop or use the site.</p>
+
+      <p>We identify potential constraints by checking your site with the <a href="https://data.planning.gov.uk" target="_blank">Planning Data Platform (link opens in new tab)</a>.</p>
     </div>
   </div>
 
@@ -28,18 +32,13 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m">Check potential constraints</h2>
 
+      {% set floodZone1Status %}{{ "Complete" if data.floodZone1ConstraintResponse else "Incomplete" }}{% endset %}
+      {% set floodZone1Tag %}{{ "govuk-tag--blue" if data.floodZone1ConstraintResponse else "govuk-tag--grey" }}{% endset %}
 
-
-      <p class="govuk-body">Planning data shows that your site is in flood zones 1 and 3a. Explain how you plan to mitigate the constraints.</p>
-
-      <p class="govuk-body">If you skip this step, we may ask how you will mitigate the constraints when we assess all suggested sites.</p>
-
-      {% set floodZone1Status %}{{ "Complete" if data.floodZone1Response else "Incomplete" }}{% endset %}
-      {% set floodZone1Tag %}{{ "govuk-tag--blue" if data.floodZone1Response else "govuk-tag--grey" }}{% endset %}
-
-      {% set floodZone3Status %}{{ "Complete" if data.floodZone3Response else "Incomplete" }}{% endset %}
-      {% set floodZone3Tag %}{{ "govuk-tag--blue" if data.floodZone3Response else "govuk-tag--grey" }}{% endset %}
+      {% set conservationAreaStatus %}{{ "Complete" if data.conservationAreaConstraintResponse else "Incomplete" }}{% endset %}
+      {% set conservationAreaTag %}{{ "govuk-tag--blue" if data.conservationAreaConstraintResponse else "govuk-tag--grey" }}{% endset %}
 
       {{ govukTaskList({
         items: [
@@ -47,7 +46,7 @@
             title: {
               text: "Flood zone 1"
             },
-            href: "/flood-zone-1",
+            href: "/constraint-flood-zone-1",
             status: {
               tag: {
                 text: floodZone1Status,
@@ -57,13 +56,13 @@
           },
           {
             title: {
-              text: "Flood zone 3"
+              text: "Conservation area"
             },
-            href: "/flood-zone-3",
+            href: "/constraint-conservation-area",
             status: {
               tag: {
-                text: floodZone3Status,
-                classes: floodZone3Tag
+                text: conservationAreaStatus,
+                classes: conservationAreaTag
               }
             }
 
@@ -73,11 +72,15 @@
 
       <div class="govuk-button-group">
         {{ govukButton({
-          text: "Save and continue",
+          text: "Continue",
           href: "/other-constraints"
         }) }}
 
-        <a href="#" class="govuk-link">Back</a>
+        {{ govukButton({
+          text: "Save and exit",
+          href: "/save-and-exit",
+          classes: "govuk-button--secondary"
+        }) }}
       </div>
     </div>
   </div>

@@ -30,27 +30,34 @@
             text: "For example, AA3 1AB."
           },
           id: "postcode",
-          name: "postcode"
+          name: "findAddressPostcode"
         }) }}
 
         {{ govukInput({
           label: {
-            text: "Building number or name",
+            text: "Building number or name (optional)",
             classes: "govuk-label--s"
           },
           hint: {
             text: "For example, 15 or Prospect Cottage."
           },
           id: "building",
-          name: "building"
+          name: "findAddressBuilding"
         }) }}
+
+        <p><a href="/site-address" class="govuk-link">Enter address manually</a></p>
 
         <div class="govuk-button-group">
           {{ govukButton({
             text: "Find address"
           }) }}
 
-          <a href="/site-address" class="govuk-link">Enter address manually</a>
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          }) }}
+
         </div>
 
       </form>

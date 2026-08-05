@@ -16,32 +16,22 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      {% set searchResults %}
-        <p class="govuk-body">6 addresses found for wr11nl and 1.</p>
+      <h1 class="govuk-heading-l">{{ pageName }}</h1>
 
-        {{ govukButton({
-          text: "Search again",
-          href: "/find-address",
-          classes: "govuk-button--secondary"
-        }) }}
-      {% endset %}
+      <p class="govuk-body">6 addresses found for <strong>{{ data['findAddressPostcode'] }}</strong>{% if data['findAddressBuilding'] %} and <strong>{{ data['findAddressBuilding'] }}</strong>{% endif %}. <a href="/find-address">Search again</a></p>
 
       <form class="form" action="/site-boundary-constraints" method="post">
-        {{ govukRadios({
+        {{ govukSelect({
           name: "selectedAddress",
-          fieldset: {
-            legend: {
-              text: pageName,
-              classes: "govuk-fieldset__legend--l",
-              isPageHeading: true
-            }
-          },
-          formGroup: {
-            beforeInputs: {
-              html: searchResults
-            }
+          label: {
+            text: "Select an address",
+            classes: "govuk-label--s"
           },
           items: [
+            { 
+              value: null,
+              text: "6 addresses found"
+            },
             {
               value: "1 Washington Street, Borchester, BR1 1NL",
               text: "1 Washington Street, Borchester, BR1 1NL"
@@ -69,12 +59,19 @@
           ]
         }) }}
 
+        <p><a href="/site-address" class="govuk-link">Enter address manually</a></p>
+
         <div class="govuk-button-group">
           {{ govukButton({
             text: "Use this address"
           }) }}
 
-          <a href="/site-address" class="govuk-link">Enter address manually</a>
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          }) }}
+
         </div>
       </form>
     </div>
