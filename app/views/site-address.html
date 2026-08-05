@@ -1,6 +1,6 @@
 {% extends "layouts/borchester.html" %}
 
-{% set pageName = "Site address" %}
+{% set pageName = "Enter the address" %}
 
 {% block pageTitle %}
   {{ pageName }} – {{ serviceName }}
@@ -16,39 +16,33 @@
 {% block content %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-l">{{ pageName }}</h1>
-
-      <p class="govuk-body">Provide the postal address for this site.</p>
-      
       <form class="form" action="/site-details" method="post">
-        {{ govukInput({
-          label: {
-            text: "Site name",
-            classes: "govuk-label--s"
-          },
-          id: "siteName",
-          name: "siteName",
-          value: data['siteName']
-        }) }}
+        {% call govukFieldset({
+          legend: {
+            text: pageName,
+            classes: "govuk-fieldset__legend--l",
+            isPageHeading: true
+          }
+        }) %}
 
         {{ govukInput({
           label: {
             text: "Address line 1",
             classes: "govuk-label--s"
           },
-          id: "addressLine1",
-          name: "addressLine1",
-          value: data['addressLine1']
+          id: "siteAddressLine1",
+          name: "siteAddressLine1",
+          value: data['siteAddressLine1']
         }) }}
 
         {{ govukInput({
           label: {
-            text: "Address line 2",
+            text: "Address line 2 (optional)",
             classes: "govuk-label--s"
           },
-          id: "addressLine2",
-          name: "addressLine2",
-          value: data['addressLine2']
+          id: "siteAddressLine2",
+          name: "siteAddressLine2",
+          value: data['siteAddressLine2']
         }) }}
 
         {{ govukInput({
@@ -56,19 +50,20 @@
             text: "Town or city",
             classes: "govuk-label--s"
           },
-          id: "townCity",
-          name: "townCity",
-          value: data['townCity']
+          id: "siteTownCity",
+          name: "siteTownCity",
+          value: data['siteTownCity']
         }) }}
 
         {{ govukInput({
           label: {
-            text: "County",
+            text: "County (optional)",
             classes: "govuk-label--s"
           },
-          id: "county",
-          name: "county",
-          value: data['county']
+          id: "siteCounty",
+          name: "siteCounty",
+          classes: "govuk-input--width-10",
+          value: data['siteCounty']
         }) }}
 
         {{ govukInput({
@@ -76,17 +71,27 @@
             text: "Postcode",
             classes: "govuk-label--s"
           },
-          id: "postcode",
-          name: "postcode",
+          id: "sitePostcode",
+          name: "sitePostcode",
           classes: "govuk-input--width-10",
-          value: data['postcode']
+          value: data['sitePostcode']
         }) }}
+
+        <p><a href="/find-address">Find an address with postcode</a></p>
 
         <div class="govuk-button-group">
           {{ govukButton({
-            text: "Save and continue"
+            text: "Add address"
           }) }}
+
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
         </div>
+
+        {% endcall %}
       </form>
 
     </div>
