@@ -17,20 +17,16 @@ router.post('/their-organisation', (req, res, next) => {
 
 
 
-router.post('/their-contact-details', (req, res, next) => {
-  if (req.session.data['theirConnection'] === 'Other' && Object.prototype.hasOwnProperty.call(req.body, 'otherConnection')) {
-    return res.redirect('/their-contact-details')
-  }
-
+router.post('/their-connection-controller', (req, res, next) => {
   if (req.session.data['theirConnection'] !== 'Other') {
-    next()
+    return res.redirect('/their-contact-details')
   } else {
     return res.redirect('/other-connection')
   }
 })
 
 
-router.post('/your-connection', (req, res, next) => {
+router.post('/your-connection-controller', (req, res, next) => {
   if (req.session.data['yourConnection'] !== 'Other') {
     return res.redirect('/your-contact-details')
   } else {
