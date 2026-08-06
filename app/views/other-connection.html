@@ -1,0 +1,52 @@
+{% extends "layouts/borchester.html" %}
+
+{% set pageName = "Tell us what their connection to the site is" %}
+
+{% block pageTitle %}
+  {{ pageName }} – {{ serviceName }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form action="/their-contact-details" method="post">
+    {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+{{ govukCharacterCount({
+  name: "otherConnection",
+  id: "with-hint",
+  maxlength: 250,
+  label: {
+    text: pageName,
+    classes: "govuk-label--l",
+    isPageHeading: true
+  }
+  
+
+  
+}) }}
+
+<div class="govuk-button-group">
+          {{ govukButton({
+            text: "Continue"
+
+          })}}
+
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/their-contact-details",
+            classes: "govuk-button--secondary"
+          })}}
+        </div>
+
+{% endblock %}
+

@@ -1,0 +1,86 @@
+{% extends "layouts/borchester.html" %}
+
+{% set pageName = "What is their main connection to the site?" %}
+
+{% block pageTitle %}
+  {{ pageName }} – {{ serviceName }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form action="/their-contact-details" method="post">
+        {{ govukRadios({
+          name: "theirConnection",
+          fieldset: {
+            legend: {
+              text: pageName,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+
+          
+          items: [
+            {
+              value: "Commercial or business operator", 
+              text: "Commercial or business operator"
+            },
+      
+            {
+              value: "Community group", 
+              text: "Community group"
+            },
+
+            {
+              value: "Developer", 
+              text: "Developer"
+            },
+
+            {
+              value: "Land owner", 
+              text: "Land owner"
+            },
+
+            {
+              value: "Local resident", 
+              text: "Local resident"
+            },
+
+            {
+              value: "Property owner", 
+              text: "Property owner"
+            },
+            
+            {
+              value: "Other", 
+              text: "Other"
+            }
+          ]
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Continue"
+          })}}
+
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
+        </div>
+      </form>
+
+{% endblock %}
+
