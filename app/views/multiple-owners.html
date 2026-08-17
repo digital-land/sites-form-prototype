@@ -1,6 +1,6 @@
 {% extends "layouts/borchester.html" %}
 
-{% set pageName = "Does this site have multiple owners?" %}
+{% set pageName = "Does the site have multiple land owners?" %}
 
 {% block pageTitle %}
   {{ pageName }} – {{ serviceName }}
@@ -17,48 +17,46 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       
-      <form class="form" action="/existing-access" method="post">
-        {% set detailsHtml %}
-          {{ govukCharacterCount({
-            id: "ownerDetails",
-            name: "ownerDetails",
-            label: {
-              text: "Give details of the site owners"
-            },
-            maxwords: 350
-          }) }}
-        {% endset %}
-
+      <form action="/multiple-owners-controller" method="post">
         {{ govukRadios({
           name: "multipleOwners",
           fieldset: {
             legend: {
               text: pageName,
-              classes: "govuk-fieldset__legend--l",
-              isPageHeading: true
+              classes: "govuk-fieldset__legend--l"
             }
           },
+
+          
           items: [
             {
-              value: "Yes",
-              text: "Yes",
-              conditional: {
-                html: detailsHtml
-              }
+              value: "yes", 
+              text: "Yes"
             },
+      
             {
-              value: "No",
+              value: "no", 
               text: "No"
-            }   
+            },
+
+            {
+              value: "I don't know", 
+              text: "I don't know"
+            }
+
+            
           ]
         }) }}
-
         <div class="govuk-button-group">
           {{ govukButton({
-            text: "Save and continue"
-          }) }}
+            text: "Continue"
+          })}}
 
-          <a href="#" class="govuk-link">Back</a>
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
         </div>
       </form>
 

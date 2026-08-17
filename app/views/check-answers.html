@@ -1,6 +1,6 @@
 {% extends "layouts/borchester.html" %}
 
-{% set pageName = "Check your answers before submitting your site suggestion" %}
+{% set pageName = "Check your answers before submitting your site" %}
 
 {% block pageTitle %}
   {{ pageName }} – {{ serviceName }}
@@ -297,16 +297,20 @@
         ]
       }) }}
 
-      <h2 class="govuk-heading-m">Now send your application</h2>
-
-      <p class="govuk-body">By submitting this application you are confirming that, to the best of your knowledge, the details you are providing are correct.</p>
-
-      <p class="govuk-body">You can <a href="#" class="govuk-link">download a copy of your application</a> (PDF, 2.5MB)</p>
+      
 
       <form class="form" action="/confirmation" method="post">
-        {{ govukButton({
-          text: "Accept and send"
-        }) }}
+       <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Submit"
+          })}}
+
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
+        </div>
       </form>
     </div>
   </div>

@@ -17,7 +17,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       
-      <form class="form" action="/site-constraints" method="post">
+      <form class="form" action="/multiple-owners" method="post">
         {{ govukRadios({
           name: "siteJoining",
           value: data['siteJoining'],
@@ -28,9 +28,7 @@
               isPageHeading: true
             }
           },
-          hint: {
-            text: "Sometimes it might be better to join sites together or split up ones to make improved development sites."
-          },
+          
           items: [
             {
               value: "Yes",
@@ -41,18 +39,22 @@
               text: "No"
             },
             {
-              value: "Maybe",
-              text: "Maybe"
+              value: "I do not know",
+              text: "I do not know"
             }
           ]
         }) }}
 
         <div class="govuk-button-group">
           {{ govukButton({
-            text: "Save and continue"
-          }) }}
+            text: "Continue"
+          })}}
 
-          <a href="#" class="govuk-link">Back</a>
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
         </div>
       </form>
 

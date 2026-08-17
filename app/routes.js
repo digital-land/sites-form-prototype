@@ -71,4 +71,63 @@ router.post('/other-constraints', (req, res, next) => {
   }
 })
 
+router.post('/existing-lease-controller', (req, res, next) => {
+  const selectedUses = req.body['currentSiteUse[]'] || req.body.currentSiteUse || req.session.data['currentSiteUse']
+  const isOtherSuiGeneris = Array.isArray(selectedUses)
+    ? selectedUses.includes('Other (Sui generis)')
+    : selectedUses === 'Other (Sui generis)'
+
+  if (isOtherSuiGeneris) {
+    return res.redirect('/other-usage-description')
+  }
+
+  return res.redirect('/existing-lease')
+})
+
+
+
+router.post('/multiple-owners-controller', (req, res, next) => {
+  if (req.session.data['multipleOwners'] !== 'yes') {
+    return res.redirect('/access-issues')
+  } else {
+    return res.redirect('/multiple-owners-details')
+  }
+})
+
+
+router.post('/vehicle-access-controller', (req, res, next) => {
+  if (req.session.data['vehicleAccess'] === 'Yes') {
+    return res.redirect('/constraints-pollution')
+  } else {
+    return res.redirect('/provide-vehicle-access')
+  }
+})
+
+
+router.post('/provide-vehicle-access-controller', (req, res, next) => {
+  if (req.session.data['provideVehicleAccess'] === 'Yes') {
+    return res.redirect('/explain-vehicle-access')
+  } else {
+    return res.redirect('/constraints-pollution')
+  }
+})
+
+
+router.post('/pollution-contamination-controller', (req, res, next) => {
+  if (req.session.data['polutionContamination'] === 'Yes') {
+    return res.redirect('/explain-dangerous-substances')
+  } else {
+    return res.redirect('/site-blockers')
+  }
+})
+
+
+
+router.post('/site-marketed-controller', (req, res, next) => {
+  if (req.session.data['siteMarketed'] === 'Yes') {
+    return res.redirect('/explain-marketing-details')
+  } else {
+    return res.redirect('/ready-for-development')
+  }
+})
 

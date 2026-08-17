@@ -1,0 +1,63 @@
+{% extends "layouts/borchester.html" %}
+
+{% set pageName = "Are there any access issues with the site?" %}
+
+{% block pageTitle %}
+  {{ pageName }} – {{ serviceName }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <form action="/existing-access" method="post">
+        {{ govukRadios({
+          name: "theirOrganisationType",
+          fieldset: {
+            legend: {
+              text: pageName,
+              classes: "govuk-fieldset__legend--l"
+            }
+            },
+
+          hint: {
+            text: "For example, if there is a reliance on land owned by another party."
+          },
+         
+         
+          items: [
+            {
+              value: "Yes",
+              text: "Yes"
+            },
+            {
+              value: "No",
+              text: "No"
+            }
+            
+          ]
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Continue"
+          })}}
+
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
+        </div>
+      </form>
+
+{% endblock %}
+
