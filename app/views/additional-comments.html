@@ -1,6 +1,7 @@
 {% extends "layouts/borchester.html" %}
 
-{% set pageName = "Provide any additional comments you want to make about the site" %}
+{% set pageName = "Add any other comments about the site (optional)
+" %}
 
 {% block pageTitle %}
   {{ pageName }} – {{ serviceName }}
@@ -24,27 +25,35 @@
               {{ pageName }}
             </label>
           </h1>
-          
-          <p class="govuk-body">Tell us if there's anything else you'd like us to know about this site, and the use or uses you have suggested for it. For example:</p>
-          <ul class="govuk-list govuk-list--bullet">
-            <li>if it's used by local people for specific activities</li>
-            <li>Example 2</li>
-            <li>Example 3</li>
-          </ul>
+          {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 
-          {{ govukCharacterCount({
-            name: "additionalComments",
-            id: "additional-comments",
-            maxwords: 350
-          }) }}
+{{ govukCharacterCount({
+  name: "yourContactDetails",
+  id: "with-hint",
+  maxlength: 750,
+  label: {
+    
+    classes: "govuk-label--l",
+    isPageHeading: true
+  }
+  
+
+  
+}) }}
+          
+
         </div>
 
         <div class="govuk-button-group">
           {{ govukButton({
-            text: "Save and continue"
-          }) }}
+            text: "Continue"
+          })}}
 
-          <a href="#" class="govuk-link">Back</a>
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
         </div>
       </form>
 

@@ -23,51 +23,51 @@
       </h1>
 
       <p class="govuk-hint">
-        We will not share or publish their contact details. We will use this information as our contact for this site.
+        We will not share or publish your contact details. We will use this information as our contact for this site.
       </p>
 
-      <form class="form" action="/select-site-boundary-how" method="post">
+      <form class="form" action="/find-site" method="post">
 
       
         {{ govukInput({
-          name: "Title",
+          name: "yourTitle",
           label: { text: "Title (optional)", classes: "govuk-label--s" },
           value: data['Title']
         }) }}
 
         {{ govukInput({
-          name: "FirstName",
+          name: "yourFirstName",
           label: { text: "First name", classes: "govuk-label--s"  },
-          value: data['FirstName']
+          value: data['yourFirstName']
         }) }}
 
         {{ govukInput({
-          name: "LastName",
+          name: "yourLastName",
           label: { text: "Last name", classes: "govuk-label--s"  },
-          value: data['LastName']
+          value: data['yourLastName']
         }) }}
 
         {{ govukInput({
-          name: "Organisation",
+          name: "yourOrganisation",
           label: { text: "Organisation (optional)", classes: "govuk-label--s"  },
-          value: data['Organisation']
+          value: data['yourOrganisation']
         }) }}
 
         {{ govukInput({
-          name: "phoneNumber",
+          name: "yourPhoneNumber",
           label: { text: "Phone number", classes: "govuk-label--s"  },
           type: "tel",
           classes: "govuk-input--width-20",
-          value: data['phoneNumber']
+          value: data['yourPhoneNumber']
         }) }}
 
 
         {{ govukInput({
-          name: "EmailAddress",
+          name: "yourEmailAddress",
           label: { text: "Email address", classes: "govuk-label--s"  },
           type: "email",
           classes: "govuk-input--width-20",
-          value: data['EmailAddress']
+          value: data['yourEmailAddress']
         }) }}
       
 

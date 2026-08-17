@@ -1,6 +1,6 @@
 {% extends "layouts/borchester.html" %}
 
-{% set pageName = "Are any of these statements true about the site?" %}
+{% set pageName = "LOGIC TO DODoes the site have any of these constraints?" %}
 
 {% block pageTitle %}
   {{ pageName }} – {{ serviceName }}
@@ -17,7 +17,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       
-      <form class="form" action="/market-interest" method="post">
+      <form class="form" action="/site-blockers-constraint-details" method="post">
         {{ govukCheckboxes({
           name: "siteBlockers",
           values: data['siteBlockers'],
@@ -29,60 +29,42 @@
             }
           },
           hint: {
-            text: "You can choose more than one option."
+            text: "Select all that apply."
           },
           items: [
             {
-              value: "Existing use on the site with a lease",
-              text: "Existing use on the site with a lease"
+              value: "Noise pollution from neighbouring properties",
+              text: "Noise pollution from neighbouring properties"
+      
+            },
+
+            {
+              value: "Legal restriction, disputes or contractual issues",
+              text: "Legal restriction, disputes or contractual issues"
             },
             {
-              value: "Reliant on third party land",
-              text: "Reliant on third party land, for example, to provide access or there are ransom strips"
-            },
-            {
-              value: "Legal impediments to development",
-              text: "Legal impediments to development (for example, restrictive covenants)"
-            },
-            {
-              value: "Notable abnormal costs",
-              text: "Notable abnormal costs related to the development"
-            },
-            {
-              value: "Neighbouring uses",
-              text: "Neighbouring uses or structures that affect the development, for example, amenities or structures that have associated offsets"
-            },
-            {
-              value: "Site can't be connected to existing utilities",
-              text: "The site can't be connected to existing utilities, for example sewers, electricity, gas and broadband"
-            },
-            {
-              value: "None",
-              text: "None of the above",
-              behaviour: "exclusive"
+              value: "Cannot be connected to existing utilities",
+              text: "Cannot be connected to existing utilities"
             }
+            
           ]
         }) }}
 
-        {{ govukCharacterCount({
-          id: "constraintsDetails",
-          name: "constraintsDetails",
-          value: data['constraintsDetails'],
-          label: {
-            text: "If you have selected any of the above please provide details of the constraints"
-          },
-          maxwords: 350
-        }) }}
+        
 
-        <div class="govuk-button-group">
+       <div class="govuk-button-group">
           {{ govukButton({
-            text: "Save and continue"
-          }) }}
+            text: "Continue"
+          })}}
 
-          <a href="#" class="govuk-link">Back</a>
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
         </div>
-      </form>
 
-    </div>
-  </div>
+        </form>
+
+        </div> </div>
 {% endblock %}

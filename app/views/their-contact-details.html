@@ -26,48 +26,48 @@
         We will not share or publish their contact details.
       </p>
 
-      <form class="form" action="/select-site-boundary-how" method="post">
+      <form class="form" action="/your-organisation" method="post">
 
       
         {{ govukInput({
-          name: "Title",
+          name: "theirTitle",
           label: { text: "Title (optional)", classes: "govuk-label--s" },
-          value: data['Title']
+          value: data['theirTitle']
         }) }}
 
         {{ govukInput({
-          name: "FirstName",
+          name: "theirFirstName",
           label: { text: "First name", classes: "govuk-label--s"  },
-          value: data['FirstName']
+          value: data['theirFirstName']
         }) }}
 
         {{ govukInput({
-          name: "LastName",
+          name: "theirLastName",
           label: { text: "Last name", classes: "govuk-label--s"  },
           value: data['LastName']
         }) }}
 
         {{ govukInput({
-          name: "Organisation",
+          name: "theirOrganisation",
           label: { text: "Organisation (optional)", classes: "govuk-label--s"  },
-          value: data['Organisation']
+          value: data['theirOrganisation']
         }) }}
 
         {{ govukInput({
-          name: "phoneNumber",
+          name: "theirPhoneNumber",
           label: { text: "Phone number", classes: "govuk-label--s"  },
           type: "tel",
           classes: "govuk-input--width-20",
-          value: data['phoneNumber']
+          value: data['theirPhoneNumber']
         }) }}
 
 
         {{ govukInput({
-          name: "EmailAddress",
+          name: "theirEmailAddress",
           label: { text: "Email address", classes: "govuk-label--s"  },
           type: "email",
           classes: "govuk-input--width-20",
-          value: data['EmailAddress']
+          value: data['theirEmailAddress']
         }) }}
       
 

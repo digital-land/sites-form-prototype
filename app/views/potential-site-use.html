@@ -1,0 +1,116 @@
+{% extends "layouts/borchester.html" %}
+
+{% set pageName = "What could the site be used for?" %}
+
+{% block pageTitle %}
+  {{ pageName }} – {{ serviceName }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      
+      <form action="/potential-other-site-use" method="post">
+        {% set otherHtml %}
+          {{ govukInput({
+            id: "currentUse",
+            name: "currentUse",
+            value: data['currentUse'],
+            label: {
+              text: pageName
+            }
+          }) }}
+        {% endset %}
+
+        
+
+        {{ govukCheckboxes({
+          name: "currentSiteUse[]",
+          values: data['currentSiteUse'],
+          fieldset: {
+            legend: {
+              text: pageName,
+              classes: "govuk-fieldset__legend--l",
+              isPageHeading: true
+            }
+          },
+          formGroup: {
+            beforeInputs: {
+              html: introHtml
+            }
+          },
+          items: [
+            {
+              text: "Class B2: General industry",
+              value: "Potential use Class B2: General industry"
+            },
+            {
+              text: "Class B8: Storage and distribution",
+              value: "Potential use Class B8: Storage and distribution"
+            },
+            {
+              text: "Class C1: Hotels",
+              value: "Potential use Class C1: Hotels"
+            },
+            {
+              text: "Class C2: Residential institutions, for example care homes, boarding schools and colleges, hospitals or nursing homes",
+              value: "Potential use Class C2: Residential institutions, for example care homes, boarding schools and colleges, hospitals or nursing homes"
+            },
+            {
+              text: "Class C2a: Secure residential institutions, for example prisons, young offenders’ institutions, detention centres or secure training centres",
+              value: "Potential use Class C2a: Secure residential institutions, for example prisons, young offenders’ institutions, detention centres or secure training centres"
+            },
+            {
+              text: "Class C3: Dwelling-houses",
+              value: "Potential use Class C3: Dwelling-houses"
+            },
+            {
+              text: "Class C4: Houses in multiple occupation",
+              value: "Potential use Class C4: Houses in multiple occupation"
+            },
+            {
+              text: "Class E: Commercial, Business and Service",
+              value: "Potential use Class E: Commercial, Business and Service"
+            },
+            {
+              text: "Class F1: Learning and non-residential institutions, for example schools, museums, libraries or art galleries",
+              value: "Potential use Class F1: Learning and non-residential institutions, for example schools, museums, libraries or art galleries"
+            },
+            {
+              text: "Class F2: Local Community Uses, for example, community halls, meeting places and outdoor sport or recreation",
+              value: "Potential use Class F2: Local Community Uses, for example, community halls, meeting places and outdoor sport or recreation"
+            },
+            {
+              text: "Other, known as ‘sui generis’: uses which do not fall within the specified use classes in this list",
+              value: "Potential use Other (Sui generis)"
+            
+            },
+            {
+              text: "Undeveloped land",
+              value: "undeveloped"
+            }
+          ]
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Continue"
+          })}}
+
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
+        </div>
+
+    </div>
+  </div>
+{% endblock %}

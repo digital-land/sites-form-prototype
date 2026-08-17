@@ -17,29 +17,22 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       
-      <form class="form" action="/proposed-use" method="post">
+      <form action="/existing-lease-controller" method="post">
         {% set otherHtml %}
           {{ govukInput({
-            id: "currentOtherDetails",
-            name: "currentOtherDetails",
-            value: data['currentOtherDetails'],
+            id: "currentUse",
+            name: "currentUse",
+            value: data['currentUse'],
             label: {
               text: "Please provide a description of the current site usage"
             }
           }) }}
         {% endset %}
 
-        {% set introHtml %}
-        <p class="govuk-body">Select the planning use class relevant to the site.</p>
-
-        <p class="govuk-body">Read the <a
-        href="https://www.planningportal.co.uk/permission/common-projects/change-of-use/use-classes">Planning
-        Portal</a> for a full explanation of the planning use classes.</p>
-        {% endset %}
-
+        
 
         {{ govukCheckboxes({
-          name: "currentSiteUse",
+          name: "currentSiteUse[]",
           values: data['currentSiteUse'],
           fieldset: {
             legend: {
@@ -96,10 +89,8 @@
             },
             {
               text: "Other, known as ‘sui generis’: uses which do not fall within the specified use classes in this list",
-              value: "Other (Sui generis)",
-              conditional: {
-                html: otherHtml
-              }
+              value: "Other (Sui generis)"
+            
             },
             {
               text: "Undeveloped land",
@@ -107,13 +98,17 @@
             }
           ]
         }) }}
-
-        <div class="govuk-button-group">
+<div class="govuk-button-group">
           {{ govukButton({
-            text: "Save and continue"
-          }) }}
+            text: "Continue"
+          })}}
 
-          <a href="#" class="govuk-link">Back</a>
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
+        </div>
         </div>
       </form>
 

@@ -1,0 +1,61 @@
+{% extends "layouts/borchester.html" %}
+
+{% set pageName = "Will you provide new vehicle access to the site?" %}
+
+{% block pageTitle %}
+  {{ pageName }} – {{ serviceName }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      
+      <form action="/provide-vehicle-access-controller" method="post">
+        {{ govukRadios({
+          name: "provideVehicleAccess",
+          fieldset: {
+            legend: {
+              text: pageName,
+              classes: "govuk-fieldset__legend--l"
+            }
+          },
+          
+
+          items: [
+            {
+              value: "Yes",
+              text: "Yes"
+            },
+            {
+              value: "No",
+              text: "No"
+            }
+          ]
+        }) }}
+
+        
+    
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Continue"
+          })}}
+
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
+        </div>
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

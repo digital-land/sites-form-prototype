@@ -1,6 +1,6 @@
 {% extends "layouts/borchester.html" %}
 
-{% set pageName = "Is there existing access to and from the public highway?" %}
+{% set pageName = "Is there existing vehicle access to and from the public highway?" %}
 
 {% block pageTitle %}
   {{ pageName }} – {{ serviceName }}
@@ -17,17 +17,17 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       
-      <form class="form" action="/site-blockers" method="post">
+      <form action="/vehicle-access-controller" method="post">
         {{ govukRadios({
-          name: "existingAccess",
-          value: data['existingAccess'],
+          name: "vehicleAccess",
           fieldset: {
             legend: {
               text: pageName,
-              classes: "govuk-fieldset__legend--l",
-              isPageHeading: true
+              classes: "govuk-fieldset__legend--l"
             }
           },
+          
+
           items: [
             {
               value: "Yes",
@@ -36,31 +36,23 @@
             {
               value: "No",
               text: "No"
-            },
-            {
-              value: "New access will be provided",
-              text: "New access will be provided"
             }
           ]
         }) }}
 
-        {{ govukCharacterCount({
-          id: "accessDetails",
-          name: "accessDetails",
-          value: data['accessDetails'],
-          label: {
-            text: "Explain what  access to and from the public highway will be provided"
-          },
-          maxwords: 350
-        }) }}
+        
     
 
         <div class="govuk-button-group">
           {{ govukButton({
-            text: "Save and continue"
-          }) }}
+            text: "Continue"
+          })}}
 
-          <a href="#" class="govuk-link">Back</a>
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
         </div>
       </form>
 
