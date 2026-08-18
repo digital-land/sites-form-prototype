@@ -16,7 +16,6 @@ router.post('/their-organisation', (req, res, next) => {
 })
 
 
-
 router.post('/their-connection-controller', (req, res, next) => {
   if (req.session.data['theirConnection'] !== 'Other') {
     return res.redirect('/their-contact-details')
@@ -115,7 +114,6 @@ router.post('/potential-use-controller', (req, res) => {
   ];
 
   const pages = [];
-
   const hasJobs = selectedUses.some(use => isJobs.includes(use));
   console.log('has jobs', hasJobs);
   const hasHomes = selectedUses.some(use => isHomes.includes(use));
@@ -125,54 +123,40 @@ router.post('/potential-use-controller', (req, res) => {
 
 
   if (hasJobs) {
-    console.log('has jobs');
     pages.push('/how-many-jobs');
   }
 
   if (hasHomes) {
-    console.log('has homes');
     pages.push('/how-many-homes');
   }
 
   if (hasOther) {
-    console.log('has other');
-    pages.push('/other-usage-description');
+    pages.push('/potential-other-site-use');
   }
 
-  if (pages.length > 0) {
+  // always redirect to site joining page at the end of the flow
+  pages.push('/site-joining');
 
-    const nextPage = pages.shift();
-
-    req.session.data.remainingPages = pages;
-
-    return res.redirect(nextPage);
-
-  } else {
-    return res.redirect('/site-joining');
-  }
-
-
+  const nextPage = pages.shift();
+  req.session.data.remainingPages = pages;
+  return res.redirect(nextPage);
 });
 
 
 // Reusable controller for conditional pages
-
 router.post('/next-conditional-page', (req, res) => {
 
   const remainingPages = req.session.data.remainingPages || [];
 
   if (remainingPages.length > 0) {
-
     const nextPage = remainingPages.shift();
-
     req.session.data.remainingPages = remainingPages;
-
     return res.redirect(nextPage);
-
+  } else {
+    // throw error if no remaining pages are found
+    console.error('No remaining pages found in session data.');
+    throw new Error('No remaining pages found in session data.');
   }
-
-  return res.redirect('/site-joining');
-
 });
 // End of the proposed-lease-controller route
 
