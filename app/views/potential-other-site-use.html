@@ -3,11 +3,11 @@
 {% set pageName = "CONTENT TBC Provide usage description" %}
 
 {% block pageTitle %}
-  {{ pageName }} – {{ serviceName }}
+{{ pageName }} – {{ serviceName }}
 {% endblock %}
 
 {% block beforeContent %}
-  {{ govukBackLink({
+{{ govukBackLink({
   text: "Back",
   href: "javascript:window.history.back()"
 }) }}
@@ -15,40 +15,38 @@
 
 {% block content %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-
-      <form action="/XXXX" method="post">
-    {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
-
-{{ govukCharacterCount({
-  name: "yourContactDetails",
-  id: "with-hint",
-  maxlength: 250,
-  label: {
-    text: pageName,
-    classes: "govuk-label--l",
-    isPageHeading: true
-  }
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    
+    <form action="/site-joining" method="post">
+      {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+      
+      {{ govukCharacterCount({
+        name: "potentialOtherSiteUse",
+        id: "with-hint",
+        maxlength: 250,
+        label: {
+          text: pageName,
+          classes: "govuk-label--l",
+          isPageHeading: true
+        }
+      }) }}
+      
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Continue"
+        })}}
+        
+        {{ govukButton({
+          text: "Save and exit",
+          href: "/save-and-exit",
+          classes: "govuk-button--secondary"
+        })}}
+      </div>
+      
+    </form>
+    
+  </div> </div>
+  {% endblock %}
   
-
   
-}) }}
-
-<div class="govuk-button-group">
-          {{ govukButton({
-            text: "Continue"
-          })}}
-
-          {{ govukButton({
-            text: "Save and exit",
-            href: "/save-and-exit",
-            classes: "govuk-button--secondary"
-          })}}
-        </div>
-
-        </form>
-
-        </div> </div>
-{% endblock %}
-
