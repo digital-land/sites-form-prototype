@@ -17,17 +17,8 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
       
-      <form class="form" action="/potential-scale" method="post">
-        {% set otherHtml %}
-          {{ govukInput({
-            id: "proposedOtherDetails",
-            name: "proposedOtherDetails",
-            value: data['proposedOtherDetails'],
-            label: {
-              text: "Please provide a description of the proposed site usage"
-            }
-          }) }}
-        {% endset %}
+      <form class="form" action="/proposed-lease-controller" method="post">
+        
 
         {% set introHtml %}
         <p class="govuk-body">Select the planning use class relevant to the site.</p>
@@ -71,7 +62,7 @@
             },
             {
               text: "Class C2a: Secure residential institutions, for example prisons, young offenders’ institutions, detention centres or secure training centres",
-              value: "Class C2a: Secure residential institutions, for example prisons, young offenders’ institutions, detention centres or secure training centres"
+              value: "Class C2a: Secure residential institutions, for example prisons, young offenders institutions, detention centres or secure training centres"
             },
             {
               text: "Class C3: Dwelling-houses",
@@ -95,10 +86,7 @@
             },
             {
               text: "Other, known as ‘sui generis’: uses which do not fall within the specified use classes in this list",
-              value: "Other (Sui generis)",
-              conditional: {
-                html: otherHtml
-              }
+              value: "Other (Sui generis)"
             }
           ]
         }) }}

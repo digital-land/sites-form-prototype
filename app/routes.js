@@ -71,6 +71,10 @@ router.post('/other-constraints', (req, res, next) => {
   }
 })
 
+
+
+
+
 router.post('/existing-lease-controller', (req, res, next) => {
   const selectedUses = req.body['currentSiteUse[]'] || req.body.currentSiteUse || req.session.data['currentSiteUse']
   const isOtherSuiGeneris = Array.isArray(selectedUses)
@@ -84,6 +88,93 @@ router.post('/existing-lease-controller', (req, res, next) => {
   return res.redirect('/existing-lease')
 })
 
+
+
+//working on this one 
+
+router.post('/potential-use-controller', (req, res) => {
+  console.log('potential-use-controller');
+
+  const selectedUses = req.session.data['proposedSiteUse'] || [];
+
+  const isJobs = [
+    'Class B2: General industry',
+    'Class B8: Storage and distribution',
+    'Class C1: Hotels',
+    'Class C2: Residential institutions, for example care homes, boarding schools and colleges, hospitals or nursing homes',
+    'Class C2a: Secure residential institutions, for example prisons, young offenders institutions, detention centres or secure training centres'
+  ];
+
+  const isHomes = [
+    'Class C3: Dwelling-houses',
+    'Class C4: Houses in multiple occupation'
+  ];
+
+  const isOtherSuiGeneris = [
+    'Other (Sui generis)'
+  ];
+
+  const pages = [];
+
+  const hasJobs = selectedUses.some(use => isJobs.includes(use));
+  console.log('has jobs', hasJobs);
+  const hasHomes = selectedUses.some(use => isHomes.includes(use));
+  console.log('has homes', hasHomes);
+  const hasOther = selectedUses.some(use => isOtherSuiGeneris.includes(use));
+  console.log('has other', hasOther);
+
+
+  if (hasJobs) {
+    console.log('has jobs');
+    pages.push('/how-many-jobs');
+  }
+
+  if (hasHomes) {
+    console.log('has homes');
+    pages.push('/how-many-homes');
+  }
+
+  if (hasOther) {
+    console.log('has other');
+    pages.push('/other-usage-description');
+  }
+
+  if (pages.length > 0) {
+
+    const nextPage = pages.shift();
+
+    req.session.data.remainingPages = pages;
+
+    return res.redirect(nextPage);
+
+  } else {
+    return res.redirect('/site-joining');
+  }
+
+
+});
+
+
+// Reusable controller for conditional pages
+
+router.post('/next-conditional-page', (req, res) => {
+
+  const remainingPages = req.session.data.remainingPages || [];
+
+  if (remainingPages.length > 0) {
+
+    const nextPage = remainingPages.shift();
+
+    req.session.data.remainingPages = remainingPages;
+
+    return res.redirect(nextPage);
+
+  }
+
+  return res.redirect('/site-joining');
+
+});
+// End of the proposed-lease-controller route
 
 
 router.post('/multiple-owners-controller', (req, res, next) => {
@@ -120,6 +211,24 @@ router.post('/pollution-contamination-controller', (req, res, next) => {
     return res.redirect('/site-blockers')
   }
 })
+
+
+
+router.post('/site-blockers-constraint-details', (req, res) => {
+
+  const selectedUses = req.session.data['siteBlockers'] || [];
+
+  const noisePollution = selectedUses.includes('Noise pollution');
+  const legalRestriction = selectedUses.includes('Legal restriction');
+  const cannotBeConnected = selectedUses.includes('Cannot be connected');
+
+  if (noisePollution || legalRestriction || cannotBeConnected) {
+    return res.redirect('/site-blockers-constraint-details');
+  }
+
+  return res.redirect('/has-site-been-marketed');
+});
+
 
 
 
