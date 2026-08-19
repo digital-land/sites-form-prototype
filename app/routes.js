@@ -112,7 +112,10 @@ router.post('/potential-use-controller', (req, res) => {
     'Class B8: Storage and distribution',
     'Class C1: Hotels',
     'Class C2: Residential institutions, for example care homes, boarding schools and colleges, hospitals or nursing homes',
-    'Class C2a: Secure residential institutions, for example prisons, young offenders institutions, detention centres or secure training centres'
+    'Class C2a: Secure residential institutions, for example prisons, young offenders institutions, detention centres or secure training centres',
+    'Class E: Commercial, Business and Service',
+    'Class F1: Learning and non-residential institutions, for example schools, museums, libraries or art galleries'
+
   ];
 
   const isHomes = [
