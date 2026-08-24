@@ -37,17 +37,17 @@
       {{ govukSummaryList({
         rows: [
           {
-            key: { text: "Their organisation description -content TBC" },
+            key: { text: "Organisation description" },
             value: { text: data['theirOrganisationType'] if data['theirOrganisationType'] else "Not provided" },
-            actions: { items: [{ href: "/their-organisation", text: "Change", visuallyHiddenText: "their organisation description -content TBC" }] }
+            actions: { items: [{ href: "/their-organisation", text: "Change", visuallyHiddenText: "Organisation description" }] }
             
           },
 
 
           {
-            key: { text: "Their site connection - content TBC" },
+            key: { text: "Site connection" },
             value: { text: data['theirConnection'] if data['theirConnection'] else "Not provided" },
-            actions: { items: [{ href: "/their-connection", text: "Change", visuallyHiddenText: "their site connection - content TBC" }] }
+            actions: { items: [{ href: "/their-connection", text: "Change", visuallyHiddenText: "Site connection" }] }
           }
         ]
       }) }}
@@ -56,9 +56,9 @@
         {{ govukSummaryList({
           rows: [
           {
-            key: { text: "Their site connection description - content TBC" },
+            key: { text: "Site connection description" },
             value: { text: data['otherConnection'] if data['otherConnection'] else "Not provided" },
-            actions: { items: [{ href: "/other-connection", text: "Change", visuallyHiddenText: "their site connection description - content TBC" }] }
+            actions: { items: [{ href: "/other-connection", text: "Change", visuallyHiddenText: "Site connection description" }] }
           }
           ]
         }) }}
@@ -107,16 +107,16 @@
       {{ govukSummaryList({
         rows: [
           {
-            key: { text: "Your organisation description -content TBC" },
+            key: { text: "Organisation description" },
             value: { text: data['yourOrganisationType'] if data['yourOrganisationType'] else "Not provided" },
-            actions: { items: [{ href: "/your-organisation", text: "Change", visuallyHiddenText: "Your organisation description -content TBC" }] }
+            actions: { items: [{ href: "/your-organisation", text: "Change", visuallyHiddenText: "Organisation description" }] }
           },
 
 
           {
-            key: { text: "Your site connection - content TBC" },
+            key: { text: "Site connection" },
             value: { text: data['yourConnection'] if data['yourConnection'] else "Not provided" },
-            actions: { items: [{ href: "/your-connection", text: "Change", visuallyHiddenText: "Your site connection - content TBC" }] }
+            actions: { items: [{ href: "/your-connection", text: "Change", visuallyHiddenText: "Site connection" }] }
           }
         ]
       }) }}
@@ -125,9 +125,9 @@
         {{ govukSummaryList({
           rows: [
           {
-            key: { text: "Your site connection description - content TBC" },
+            key: { text: "Site connection description" },
             value: { text: data['yourOtherConnection'] if data['yourOtherConnection'] else "Not provided" },
-            actions: { items: [{ href: "/your-other-connection", text: "Change", visuallyHiddenText: "Your site connection description - content TBC" }] }
+            actions: { items: [{ href: "/your-other-connection", text: "Change", visuallyHiddenText: "Site connection description" }] }
           }
           ]
         }) }}
@@ -607,7 +607,18 @@
         ]
       }) }}
 
+<div class="govuk-button-group">
+          {{ govukButton({
+            text: "Submit",
+            href: "/confirmation"
+          })}}
 
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
+        </div>
 
       
         </div>
