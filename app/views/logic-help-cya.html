@@ -1,0 +1,497 @@
+{% extends "layouts/borchester.html" %}
+
+{% set pageName = "Check your answers before submitting your site" %}
+
+{% block pageTitle %}
+  {{ pageName }} – {{ serviceName }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">{{ pageName }}</h1>
+
+      <h2 class="govuk-heading-m">Submitted on behalf of someone else</h2>
+      {{ govukSummaryList({
+
+        rows: [
+          { key: {text: "Submitted on behalf of someone else"},
+            value: { text: "yes" if data['onBehalfOf'] == "Yes" else "No" },
+            actions: { items: [{ href: "/on-behalf-of", text: "Change", visuallyHiddenText: "submitted on behalf of someone else" }] }
+          }
+        ]
+      }) }}
+
+     
+
+<h2 class="govuk-heading-m">Their details</h2>
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: { text: "Their organisation description -content TBC" },
+            value: { text: data['theirOrganisation'] if data['theirOrganisation'] else "Not provided" },
+            actions: { items: [{ href: "/their-organisation", text: "Change", visuallyHiddenText: "their organisation description -content TBC" }] }
+            
+          },
+
+
+          {
+            key: { text: "Their site connection - content TBC" },
+            value: { text: data['yourConnection'] if data['yourConnection'] else "Not provided" },
+            actions: { items: [{ href: "/their-connection", text: "Change", visuallyHiddenText: "their site connection - content TBC" }] }
+          },
+          {
+            key: { text: "Their site connection description - content TBC" },
+            value: { text: data['otherConnection'] if data['yourContactDetails'] else "Not provided" },
+            actions: { items: [{ href: "/their-other-connection", text: "Change", visuallyHiddenText: "their site connection description - content TBC" }] }
+          },
+          {
+            key: { text: "Title" },
+            value: { text: data['theirTitle'] if data['theirTitle'] else "Not provided" },
+            actions: { items: [{ href: "/their-contact-details", text: "Change", visuallyHiddenText: "Title" }] }
+          },
+          {
+            key: { text: "First name" },
+            value: { text: data['theirFirstName'] if data['theirFirstName'] else "Not provided" },
+            actions: { items: [{ href: "/their-contact-details", text: "Change", visuallyHiddenText: "First name" }] }
+          },
+          {
+            key: { text: "Last name" },
+            value: { text: data['theirLastName'] if data['theirLastName'] else "Not provided" },
+            actions: { items: [{ href: "/their-contact-details", text: "Change", visuallyHiddenText: "Last name" }] }
+          },
+          {
+            key: { text: "Organisation" },
+            value: { text: data['theirOrganisation'] if data['theirOrganisation'] else "Not provided" },
+            actions: { items: [{ href: "/their-contact-details", text: "Change", visuallyHiddenText: "Organisation" }] }
+          },
+          {
+            key: { text: "Telephone number" },
+            value: { text: data['theirPhoneNumber'] if data['theirPhoneNumber'] else "Not provided" },
+            actions: { items: [{ href: "/their-contact-details", text: "Change", visuallyHiddenText: "Telephone number" }] }
+          },
+
+          {
+            key: { text: "Email address" },
+            value: { text: data['theirEmailAddress'] if data['theirEmailAddress'] else "Not provided" },
+            actions: { items: [{ href: "/their-contact-details", text: "Change", visuallyHiddenText: "Email address" }] }
+          }
+        ]
+      }) }}
+
+      <h2 class="govuk-heading-m">Your details</h2>
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: { text: "Your organisation description -content TBC" },
+            value: { text: data['yourOrganisationType'] if data['yourOrganisationType'] else "Not provided" },
+            actions: { items: [{ href: "/your-organisation", text: "Change", visuallyHiddenText: "Your organisation description -content TBC" }] }
+          },
+
+
+          {
+            key: { text: "Your site connection - content TBC" },
+            value: { text: data['yourConnection'] if data['yourConnection'] else "Not provided" },
+            actions: { items: [{ href: "/your-connection", text: "Change", visuallyHiddenText: "Your site connection - content TBC" }] }
+          },
+          {
+            key: { text: "Your site connection description - content TBC" },
+            value: { text: data['yourContactDetails'] if data['yourContactDetails'] else "Not provided" },
+            actions: { items: [{ href: "/other-connection", text: "Change", visuallyHiddenText: "Your site connection description - content TBC" }] }
+          },
+          {
+            key: { text: "Title" },
+            value: { text: data['yourTitle'] if data['yourTitle'] else "Not provided" },
+            actions: { items: [{ href: "/your-contact-details", text: "Change", visuallyHiddenText: "Title" }] }
+          },
+          {
+            key: { text: "First name" },
+            value: { text: data['yourFirstName'] if data['yourFirstName'] else "Not provided" },
+            actions: { items: [{ href: "/your-contact-details", text: "Change", visuallyHiddenText: "First name" }] }
+          },
+          {
+            key: { text: "Last name" },
+            value: { text: data['yourLastName'] if data['yourLastName'] else "Not provided" },
+            actions: { items: [{ href: "/your-contact-details", text: "Change", visuallyHiddenText: "Last name" }] }
+          },
+          {
+            key: { text: "Organisation" },
+            value: { text: data['yourOrganisation'] if data['yourOrganisation'] else "Not provided" },
+            actions: { items: [{ href: "/your-contact-details", text: "Change", visuallyHiddenText: "Organisation" }] }
+          },
+          {
+            key: { text: "Telephone number" },
+            value: { text: data['yourPhoneNumber'] if data['yourPhoneNumber'] else "Not provided" },
+            actions: { items: [{ href: "/your-contact-details", text: "Change", visuallyHiddenText: "Telephone number" }] }
+          },
+
+          {
+            key: { text: "Email address" },
+            value: { text: data['yourEmailAddress'] if data['yourEmailAddress'] else "Not provided" },
+            actions: { items: [{ href: "/your-contact-details", text: "Change", visuallyHiddenText: "Email address" }] }
+          }
+        ]
+      }) }}
+
+     
+
+      <h2 class="govuk-heading-m">Site location and boundary</h2>
+
+      <img src="/public/images/site-boundary-map.png" alt="Site boundary map" style="width: 100%; height: auto;">
+      <p><a href="/site-boundary">Change site boundary</a></p>
+
+      {% set preAppText %}
+        {% if data['hasPreAppDiscussion'] == "yes" %}
+          Yes — Reference: {{ data['preAppReference'] }}
+        {% elif data['hasPreAppDiscussion'] == "no" %}
+          No
+        {% else %}
+          Not provided
+        {% endif %}
+      {% endset %}
+
+      !!!-- keep as exmple for now, will need to change to match the new questions and answers --!!!
+
+      {% set previousPromotionText %}
+        {% if data['previousPromotion'] == "yes" %}
+          Yes — Reference: {{ data['previousPromotionReference'] }}
+        {% elif data['previousPromotion'] == "no" %}
+          No
+        {% else %}
+          Not provided
+        {% endif %}
+      {% endset %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: { text: "Site address" },
+            value: { 
+              html: ([
+                data['siteName'],
+                data['addressLine1'], 
+                data['addressLine2'],
+                data['townCity'],
+                data['county'],
+                data['postcode']
+              ] | select("truthy") | join("<br>")) if data['addressLine1'] or data['postcode'] else "Not provided"
+            },
+            actions: { items: [{ href: "/site-address", text: "Change", visuallyHiddenText: "site address" }] }
+          },
+          {
+            key: { text: "Pre-application discussions" },
+            value: { text: preAppText | trim },
+            actions: { items: [{ href: "/pre-application", text: "Change", visuallyHiddenText: "pre-application discussions" }] }
+          },
+          {
+            key: { text: "Previous promotion" },
+            value: { text: previousPromotionText },
+            actions: { items: [{ href: "/previous-promotion", text: "Change", visuallyHiddenText: "previous promotion" }] }
+          }
+        ]
+      }) }}
+
+      <h2 class="govuk-heading-m">Suitability</h2>
+
+      {% set currentUseHtml = data['currentSiteUse'] | join("<br>") if data['currentSiteUse'] else "Not provided" %}
+      {% set currentUseHtml = currentUseHtml + ("<br> Other: " + data['currentOtherDetails'] if data['currentOtherDetails'] else "") %}
+
+      {% set proposedUseHtml = data['proposedSiteUse'] | join("<br>") if data['proposedSiteUse'] else "Not provided" %}
+      {% set proposedUseHtml = proposedUseHtml + ("<br> Other: " + data['proposedOtherDetails'] if data['proposedOtherDetails'] else "") %}
+      
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: { text: "Current usage" },
+            value: { 
+              html: currentUseHtml | trim
+            },
+            actions: { items: [{ href: "/current-use", text: "Change", visuallyHiddenText: "current usage" }] }
+          },
+          {
+            key: { text: "Proposed usage" },
+            value: { 
+              html: proposedUseHtml | trim
+            },
+            actions: { items: [{ href: "/proposed-use", text: "Change", visuallyHiddenText: "proposed usage" }] }
+          },
+          {
+            key: { text: "Potential scale" },
+            value: { text: data['scaleOfDevelopment'] if data['scaleOfDevelopment'] else "Not provided" },
+            actions: { items: [{ href: "/potential-scale", text: "Change", visuallyHiddenText: "potential scale" }] }
+          },
+          {
+            key: { text: "Willing to join or split site" },
+            value: { text: (data['siteJoining'] | capitalize ) if data['siteJoining'] else "Not provided" },
+            actions: { items: [{ href: "/site-joining", text: "Change", visuallyHiddenText: "site joining preference" }] }
+          }
+        ]
+      }) }}
+
+      <h2 class="govuk-heading-m">Site constraints</h2>
+      {% set floodZone3Text %}
+        {% if data['floodZone3Type'] %}
+          Type: {{ data['floodZone3Type'] }}
+        {% elif data['floodZone3Response'] %}
+          {{ data['floodZone3Response'] }}
+        {% else %}
+          Not provided
+        {% endif %}
+      {% endset %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: { text: "Flood zone 1 response" },
+            value: { text: data['floodZone1Response'] if data['floodZone1Response'] else "Not provided" },
+            actions: { items: [{ href: "/flood-zone-1", text: "Change", visuallyHiddenText: "flood zone 1 response" }] }
+          },
+          {
+            key: { text: "Flood zone 3 response" },
+            value: { text: floodZone3Text | trim },
+            actions: { items: [{ href: "/flood-zone-3", text: "Change", visuallyHiddenText: "flood zone 3 response" }] }
+          },
+          {
+            key: { text: "Other constraints" },
+            value: { text: data['otherConstraints'] if data['otherConstraints'] else "None provided" },
+            actions: { items: [{ href: "/other-constraints", text: "Change", visuallyHiddenText: "other constraints" }] }
+          }
+        ]
+      }) }}
+
+
+
+ <h2 class="govuk-heading-m">Site use</h2>
+      {% set floodZone3Text %}
+        {% if data['floodZone3Type'] %}
+          Type: {{ data['floodZone3Type'] }}
+        {% elif data['floodZone3Response'] %}
+          {{ data['floodZone3Response'] }}
+        {% else %}
+          Not provided
+        {% endif %}
+      {% endset %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: { text: "Site use" },
+            value: { text: data['currentUse'] if data['currentUse'] else "Not provided" },
+            actions: { items: [{ href: "/current-use", text: "Change", visuallyHiddenText: "site use" }] }
+          },
+
+          {
+            key: { text: "Site use details CONTENT TBC" },
+            value: { text: data['otherUsageDescription'] if data['otherUsageDescription'] else "Not provided" },
+            actions: { items: [{ href: "/other-usage-description", text: "Change", visuallyHiddenText: "Site use details CONTENT TBC" }] }
+          },
+          {
+            key: { text: "Existing uses with a lease" },
+            value: { text: data['existingLease'] if data['existingLease'] else "Not provided" },
+            actions: { items: [{ href: "/existing-lease", text: "Change", visuallyHiddenText: "existing uses with a lease" }] }
+          },
+          {
+            key: { text: "Potential site use CONTENT TBC" },
+            value: { text: data['proposedSiteUse'] if data['proposedSiteUse'] else "Not provided" },
+            actions: { items: [{ href: "/potential-site-use", text: "Change", visuallyHiddenText: "Potential site use CONTENT TBC" }] }
+          },
+          {
+            key: { text: "Potential other site use CONTENT TBC" },
+            value: { text: data['potentialOtherSiteUse'] if data['potentialOtherSiteUse'] else "Not provided" },
+            actions: { items: [{ href: "/potential-other-site-use", text: "Change", visuallyHiddenText: "Potential other site use CONTENT TBC" }] }
+          },
+          {
+            key: { text: "Number of jobs created" },
+            value: { text: data['howManyJobs'] if data['howManyJobs'] else "None provided" },
+            actions: { items: [{ href: "/how-many-jobs", text: "Change", visuallyHiddenText: "Number of jobs created" }] }
+          },
+
+          {
+            key: { text: "Number of houses created CONTENT TBC" },
+            value: { text: data['howManyHomes'] if data['howManyHomes'] else "None provided" },
+            actions: { items: [{ href: "/how-many-homes", text: "Change", visuallyHiddenText: "Number of houses created content TBC" }] }
+          },
+          {
+            key: { text: "Willing for site to be joined up with adjacent sites" },
+            value: { text: data['siteJoining'] if data['siteJoining'] else "None provided" },
+            actions: { items: [{ href: "/site-joining", text: "Change", visuallyHiddenText: "Willing for site to be joined up with adjacent sites" }] }
+          },
+          {
+            key: { text: "Multiple land owners" },
+            value: { text: data['multipleOwners'] if data['multipleOwners'] else "None provided" },
+            actions: { items: [{ href: "/multiple-owners", text: "Change", visuallyHiddenText: "Multiple land owners" }] }
+          },
+          {
+            key: { text: "Land owner names and addresses" },
+            value: { text: data['multipleOwnersDetails'] if data['multipleOwnersDetails'] else "None provided" },
+            actions: { items: [{ href: "/multiple-owners-details", text: "Change", visuallyHiddenText: "Land owner names and addresses" }] }
+          },
+          {
+            key: { text: "Access issues" },
+            value: { text: data['accessIssues'] if data['multipleOwnersDetails'] else "None provided" },
+            actions: { items: [{ href: "/access-issues", text: "Change", visuallyHiddenText: "Access issues" }] }
+          },
+          {
+            key: { text: "Vehicle access" },
+            value: { text: data['vehicleAccess'] if data['multipleOwnersDetails'] else "None provided" },
+            actions: { items: [{ href: "/existing-access", text: "Change", visuallyHiddenText: "Vehicle access" }] }
+          }
+        ]
+      }) }}
+
+
+
+      <h2 class="govuk-heading-m">Availability</h2>
+
+      {% set multipleOwnersHtml %}
+        {% if data['multipleOwners'] %}
+          {{ data['multipleOwners'] }}
+          {% if data['multipleOwners'] == "Yes" %}
+            <br>Details: {{ data['ownerDetails'] if data['ownerDetails'] else "Not provided" }}
+          {% endif %}
+        {% else %}
+          Not provided
+        {% endif %}
+      {% endset %}
+
+      {% set expectedReadyText %}
+        {% if data['expectedReady-year'] %}
+          {% switch data['expectedReady-month'] %}
+            {% case "1" or "01" %} January
+            {% case "2" or "02" %} February
+            {% case "3" or "03" %} March
+            {% case "4" or "04" %} April
+            {% case "5" or "05" %} May
+            {% case "6" or "06" %} June
+            {% case "7" or "07" %} July
+            {% case "8" or "08" %} August
+            {% case "9" or "09" %} September
+            {% case "10" %} October
+            {% case "11" %} November
+            {% case "12" %} December
+            {% default %} {{ data['expectedReady-month'] }}
+          {% endswitch %}
+          {{ data['expectedReady-year'] }}
+        {% elif data['timelineUnknown'] %}
+          Don't know
+        {% else %}
+          Not provided
+        {% endif %}
+      {% endset %}
+
+      {% set firstCompletionText %}
+        {% if data['firstCompletion-year'] %}
+          {% switch data['firstCompletion-month'] %}
+            {% case "1" or "01" %} January
+            {% case "2" or "02" %} February
+            {% case "3" or "03" %} March
+            {% case "4" or "04" %} April
+            {% case "5" or "05" %} May
+            {% case "6" or "06" %} June
+            {% case "7" or "07" %} July
+            {% case "8" or "08" %} August
+            {% case "9" or "09" %} September
+            {% case "10" %} October
+            {% case "11" %} November
+            {% case "12" %} December
+            {% default %} {{ data['firstCompletion-month'] }}
+          {% endswitch %}
+          {{ data['firstCompletion-year'] }}
+        {% elif data['timelineUnknown'] %}
+          Don't know
+        {% else %}
+          Not provided
+        {% endif %}
+      {% endset %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: { text: "Connection to site" },
+            value: { 
+              text: data['siteConnection'] + (": " + data['otherConnection'] if data['siteConnection'] == "Other" else "") if data['siteConnection'] else "Not provided"
+            },
+            actions: { items: [{ href: "/site-connection", text: "Change", visuallyHiddenText: "connection to site" }] }
+          },
+          {
+            key: { text: "Multiple owners" },
+            value: { html: multipleOwnersHtml | trim },
+            actions: { items: [{ href: "/multiple-owners", text: "Change", visuallyHiddenText: "multiple owners" }] }
+          },
+          {
+            key: { text: "Existing access" },
+            value: { text: data['existingAccess'] if data['existingAccess'] else "Not provided" },
+            actions: { items: [{ href: "/existing-access", text: "Change", visuallyHiddenText: "existing access" }] }
+          },
+          {
+            key: { text: "Access details" },
+            value: { text: data['accessDetails'] if data['accessDetails'] else "Not provided" },
+            actions: { items: [{ href: "/existing-access", text: "Change", visuallyHiddenText: "access details" }] }
+          },
+          {
+            key: { text: "Site viability constraints" },
+            value: { html: data['siteBlockers'] | join("<br>") if data['siteBlockers'] else "None provided" },
+            actions: { items: [{ href: "/site-blockers", text: "Change", visuallyHiddenText: "site blockers" }] }
+          },
+          {
+            key: { text: "Viability constraints details" },
+            value: { text: data['constraintsDetails'] if data['constraintsDetails'] else "Not provided" },
+            actions: { items: [{ href: "/site-blockers", text: "Change", visuallyHiddenText: "viability constraints details" }] }
+          },
+          {
+            key: { text: "Market interest" },
+            value: { text: data['marketInterest'] if data['marketInterest'] else "Not provided" },
+            actions: { items: [{ href: "/market-interest", text: "Change", visuallyHiddenText: "site timeline" }] }
+          },
+          {
+            key: { text: "Market interest details" },
+            value: { text: data['marketInterestDetails'] if data['marketInterestDetails'] else "Not provided" },
+            actions: { items: [{ href: "/market-interest", text: "Change", visuallyHiddenText: "site timeline" }] }
+          },
+          {
+            key: { text: "Ready for development" },
+            value: { text: expectedReadyText | trim },
+            actions: { items: [{ href: "/site-timeline", text: "Change", visuallyHiddenText: "ready for development" }] }
+          },
+          {
+            key: { text: "First completion" },
+            value: { text: firstCompletionText | trim },
+            actions: { items: [{ href: "/site-timeline", text: "Change", visuallyHiddenText: "ready for development" }] }
+          },
+          {
+            key: { text: "Additional comments" },
+            value: { text: data['additionalComments'] if data['additionalComments'] else "Not provided" },
+            actions: { items: [{ href: "/additional-comments", text: "Change", visuallyHiddenText: "additional comments" }] }
+          }
+        ]
+      }) }}
+
+      
+
+      <form class="form" action="/confirmation" method="post">
+       <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Submit"
+          })}}
+
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
+        </div>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}
+
