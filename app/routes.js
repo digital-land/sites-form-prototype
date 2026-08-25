@@ -40,6 +40,12 @@ router.post('/find-address', (req, res, next) => {
   }
 })
 
+router.get('/site-boundary', (req, res, next) => {
+  res.render('site-boundary', {
+    osMapsApiKey: process.env.ORDNANCE_SURVEY_API_KEY
+  })
+})
+
 router.post('/constraint-flood-zone-1', (req, res, next) => {
   if (req.session.data['floodZone1ConstraintResponse'] === 'yes') {
     return res.redirect('/constraint-flood-zone-1-how')
