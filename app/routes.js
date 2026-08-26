@@ -47,11 +47,20 @@ router.post('/find-address', (req, res, next) => {
   }
 })
 
-router.get('/site-boundary', (req, res, next) => {
+router.get('/site-boundary', mapHandler)
+router.post('/site-boundary', mapHandler)
+
+async function mapHandler(req, res, next) {
+  const lpaDetails = 
+    {
+      curie: 'statistical-geography:E60000182'
+    }
+
   res.render('site-boundary', {
-    osMapsApiKey: process.env.ORDNANCE_SURVEY_API_KEY
+    osMapsApiKey: process.env.ORDNANCE_SURVEY_API_KEY,
+    lpaDetails
   })
-})
+}
 
 router.post('/constraint-flood-zone-1', (req, res, next) => {
   if (req.session.data['floodZone1ConstraintResponse'] === 'yes') {
