@@ -78,9 +78,6 @@ router.post('/other-constraints', (req, res, next) => {
 })
 
 
-
-
-
 router.post('/existing-lease-controller', (req, res, next) => {
   const selectedUses = req.body['currentSiteUse[]'] || req.body.currentSiteUse || req.session.data['currentSiteUse']
   const isOtherSuiGeneris = Array.isArray(selectedUses)
@@ -255,3 +252,8 @@ router.all('/lpa-template/:lpaName/:templateName', (req, res) => {
     lpaDetails: lpaDetails
   } });
 });
+
+/**********************************************************
+ * Proxy API routes for map data                          *
+***********************************************************/
+require('./routes/api.js')
