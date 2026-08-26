@@ -70,4 +70,7 @@ router.post('/other-constraints', (req, res, next) => {
   }
 })
 
-
+/**********************************************************
+ * Proxy API routes for map data                          *
+***********************************************************/
+require('./routes/api.js')
