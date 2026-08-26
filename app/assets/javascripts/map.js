@@ -4,8 +4,10 @@ const MAP_STYLE = {
   id: 'light',
   url: OS_VTS_STYLE_URLS.light,
   attribution: OS_ATTRIBUTION,
-  backgroundColor: '#f5f5f0'
+  backgroundColor: '#c5cdd0'
 }
+
+const DRAW_LAYERS = ['fill-inactive.cold', 'stroke-inactive.cold']
 
 const mapColours = {
   purple: '#330165',
@@ -77,19 +79,26 @@ const boundaryStyle = {
   fill: 'transparent'
 }
 
+const siteBoundaryStyle = {
+  stroke: mapColours.orange,
+  strokeOpacity: 1,
+  strokeWidth: 4,
+  fill: 'transparent'
+}
+
 async function initialiseMap() {
   const transformRequest = useOsTransformRequest()
   console.log('Initialising map with config:', JSON.stringify(window.mapConfig))
   const lpaCurie = window.mapConfig.lpaDetails.curie
   const boundaryGeoJsonUrl = `/api/${lpaCurie}/boundary.geojson`
   const boundaryResponse = await fetch(boundaryGeoJsonUrl)
-
+  
   if (!boundaryResponse.ok) {
     throw new Error(`Boundary request failed: ${boundaryResponse.status}`)
   }
-
+  
   const boundaryGeoJson = await boundaryResponse.json()
-
+  
   const datasetsPlugin = defra.datasetsPlugin({
     datasets: [
       {
@@ -105,7 +114,22 @@ async function initialiseMap() {
       }
     ]
   })
-
+  
+  const drawPlugin = defra.drawPlugin({
+    drawModes: ['draw_polygon'],
+    style: layerStyles
+  })
+  
+  const interactPlugin = defra.interactPlugin({
+    layers: [
+      { layerId: 'fill-inactive.cold', idProperty: 'id' },
+      { layerId: 'stroke-inactive.cold', idProperty: 'id' }
+    ],
+    interactionModes: ['selectFeature'],
+    multiSelect: false,
+    deselectOnClickOutside: true
+  })
+  
   const interactiveMap = new defra.InteractiveMap('map', {
     behaviour: 'inline',
     mapProvider: defra.maplibreProvider(),
@@ -115,20 +139,100 @@ async function initialiseMap() {
     zoom: 6,
     containerHeight: '40vh',
     hasExitButton: true,
-    plugins: [datasetsPlugin]
+    plugins: [datasetsPlugin, drawPlugin, interactPlugin]
   })
 
-  interactiveMap.map.on('load', () => {
-    interactiveMap.map.fitBounds(getBounds(boundaryGeoJson), {
-      padding: 40,
-      maxZoom: 14
+  let selectedFeatureIds = []
+  
+  interactiveMap.on('map:ready', () => {
+    interactiveMap.fitToBounds(boundaryGeoJson.features[0])
+    
+    interactiveMap.addButton('drawPolygon', {
+      label: 'Draw polygon',
+      iconId: 'polygon',
+      onClick: () => {
+        drawPlugin.newPolygon(crypto.randomUUID())
+      },
+      mobile: { slot: 'actions'},
+      tablet: { slot: 'actions'},
+      desktop: { slot: 'actions'}
+    })
+
+    interactiveMap.addButton('editPolygon', {
+      label: 'Edit polygon',
+      iconId: 'polygon',
+      onClick: () => {
+        if (!drawPlugin.editFeature(selectedFeatureIds[0])) return
+        interactPlugin.disable()
+      },
+      mobile: { slot: 'actions'},
+      tablet: { slot: 'actions'},
+      desktop: { slot: 'actions'},
+      isHidden: true
+    })
+
+    interactiveMap.addButton('deletePolygon', {
+      label: 'Delete polygon',
+      iconId: 'polygon',
+      onClick: () => {
+        if (!drawPlugin.deleteFeature(selectedFeatureIds[0])) return
+        interactPlugin.disable()
+      },
+      mobile: { slot: 'actions'},
+      tablet: { slot: 'actions'},
+      desktop: { slot: 'actions'},
+      isHidden: true
+    })
+
+    interactPlugin.enable()
+
+    interactiveMap.on('draw:started', function () {
+      interactPlugin.disable()
+    })
+
+    interactiveMap.on('draw:created', function () {
+      interactiveMap.toggleButtonState('drawPolygon', 'hidden', true)
+      interactiveMap.toggleButtonState('editPolygon', 'hidden', false)
+      interactiveMap.toggleButtonState('deletePolygon', 'hidden', false)
+      interactPlugin.enable()
+    })
+
+    interactiveMap.on('draw:edited', function () {
+      interactiveMap.toggleButtonState('drawPolygon', 'hidden', true)
+      interactiveMap.toggleButtonState('editPolygon', 'hidden', false)
+      interactiveMap.toggleButtonState('deletePolygon', 'hidden', false)
+      interactPlugin.enable()
+    })
+
+    interactiveMap.on('draw:cancelled', function () {
+      interactiveMap.toggleButtonState('drawPolygon', 'hidden', false)
+      interactPlugin.enable()
+    })
+
+    interactiveMap.on('draw:delete', function () {
+      interactiveMap.toggleButtonState('drawPolygon', 'hidden', false)
+      interactiveMap.toggleButtonState('drawPolygon', 'disabled', false)
+      interactiveMap.toggleButtonState('editPolygon', 'hidden', true)
+      interactiveMap.toggleButtonState('deletePolygon', 'hidden', true)
+      interactPlugin.enable()
+    })
+
+    interactiveMap.on('interact:selectionchange', function (e) {
+      var singleFeature = e.selectedFeatures.length === 1
+      var anyFeature = e.selectedFeatures.length > 0
+      var isDrawFeature = singleFeature && DRAW_LAYERS.includes(e.selectedFeatures[0].layerId)
+      var allDrawFeatures = anyFeature && e.selectedFeatures.every(function (f) { return DRAW_LAYERS.includes(f.layerId) })
+      selectedFeatureIds = e.selectedFeatures.map(function (f) { return f.featureId })
+      interactiveMap.toggleButtonState('drawPolygon', 'disabled', singleFeature)
+      interactiveMap.toggleButtonState('drawLine', 'disabled', singleFeature)
+      interactiveMap.toggleButtonState('editFeature', 'disabled', !isDrawFeature)
+      interactiveMap.toggleButtonState('deleteFeature', 'disabled', !allDrawFeatures)
+    })
+    
+    interactiveMap.on('map:error', function (event) {
+      console.error('Map error:', event)
     })
   })
-
-  interactiveMap.on('map:error', function (event) {
-    console.error('Map error:', event)
-  })
-  
 }
 
 window.initialiseMap = initialiseMap
