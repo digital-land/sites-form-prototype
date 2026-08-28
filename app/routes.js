@@ -17,7 +17,6 @@ router.post('/their-organisation', (req, res, next) => {
 })
 
 
-
 router.post('/their-connection-controller', (req, res, next) => {
   if (req.session.data['theirConnection'] !== 'Other') {
     return res.redirect('/their-contact-details')
@@ -241,3 +240,45 @@ router.post('/site-marketed-controller', (req, res, next) => {
  * Proxy API routes for map data                          *
 ***********************************************************/
 require('./routes/api.js')
+  } else {
+    return res.redirect('/constraints-pollution')
+  }
+})
+
+
+router.post('/pollution-contamination-controller', (req, res, next) => {
+  if (req.session.data['polutionContamination'] === 'Yes') {
+    return res.redirect('/explain-dangerous-substances')
+  } else {
+    return res.redirect('/site-blockers')
+  }
+})
+
+
+
+router.post('/site-blockers-constraint-details', (req, res) => {
+
+  const selectedUses = req.session.data['siteBlockers'] || [];
+
+  const noisePollution = selectedUses.includes('Noise pollution');
+  const legalRestriction = selectedUses.includes('Legal restriction');
+  const cannotBeConnected = selectedUses.includes('Cannot be connected');
+
+  if (noisePollution || legalRestriction || cannotBeConnected) {
+    return res.redirect('/site-blockers-constraint-details');
+  }
+
+  return res.redirect('/has-site-been-marketed');
+});
+
+
+
+
+router.post('/site-marketed-controller', (req, res, next) => {
+  if (req.session.data['siteMarketed'] === 'Yes') {
+    return res.redirect('/explain-marketing-details')
+  } else {
+    return res.redirect('/ready-for-development')
+  }
+})
+
