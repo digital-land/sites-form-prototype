@@ -5,8 +5,10 @@
     "start": "govuk-prototype-kit start"
   },
   "dependencies": {
-    "@defra/interactive-map": "^0.0.37-alpha",
+    "@defra/interactive-map": "^0.0.42-alpha",
     "@govuk-prototype-kit/common-templates": "2.0.1",
+    "dotenv": "^17.4.2",
+    "express-async-handler": "^1.2.0",
     "govuk-frontend": "5.11.0",
     "govuk-prototype-kit": "13.17.0"
   }
