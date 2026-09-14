@@ -199,8 +199,6 @@ router.post('/pollution-contamination-controller', (req, res, next) => {
   }
 })
 
-
-
 router.post('/site-blockers-constraint-details', (req, res) => {
 
   const selectedUses = req.session.data['siteBlockers'] || [];
@@ -216,9 +214,6 @@ router.post('/site-blockers-constraint-details', (req, res) => {
   return res.redirect('/has-site-been-marketed');
 });
 
-
-
-
 router.post('/site-marketed-controller', (req, res, next) => {
   if (req.session.data['siteMarketed'] === 'Yes') {
     return res.redirect('/explain-marketing-details')
@@ -227,3 +222,27 @@ router.post('/site-marketed-controller', (req, res, next) => {
   }
 })
 
+router.all('/lpa-template/:lpaName/:templateName', (req, res) => {
+  const lpaDetails = {}
+
+  if (req.params.lpaName == "planhamshire") {
+    lpaDetails.name = "Planhamshire Borough Council"
+  } else if (req.params.lpaName == "calderdale") {
+    lpaDetails.name = "Calderdale Council"
+    lpaDetails.logo = "/public/images/lpa-logos/calderdale-logo.svg"
+  } else if (req.params.lpaName == "middlesbrough") {
+    lpaDetails.name = "Middlesbrough Council"
+    lpaDetails.logo = "/public/images/lpa-logos/middlesbrough-logo.svg"
+    lpaDetails.colour = "#02467b"
+  } else if (req.params.lpaName == "rossendale") {
+    lpaDetails.name = "Rossendale Borough Council"
+    lpaDetails.logo = "/public/images/lpa-logos/rossendale-logo.svg"
+    lpaDetails.colour = "#005c3c"
+  } else if (req.params.lpaName == "sunderland") {
+    lpaDetails.name = "Sunderland City Council"
+    lpaDetails.logo = "/public/images/lpa-logos/sunderland-logo.svg"
+    lpaDetails.colour = "#ed0039"
+  }
+
+  res.render(`lpa-template/${req.params.templateName}`, { lpaDetails });
+});

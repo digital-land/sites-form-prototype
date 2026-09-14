@@ -1,0 +1,85 @@
+{% extends "layouts/lpa-branded.html" %}
+
+{% set pageName = "Enter your contact details" %}
+
+{% block pageTitle %}
+  {{ pageName }} – {{ serviceName }}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <h1 class="govuk-heading-l">
+        {{ pageName }}
+      </h1>
+
+      <p class="govuk-hint">
+        We will not share or publish your contact details. We will use this information as our contact for this site.
+      </p>
+      
+        {{ govukInput({
+          name: "yourTitle",
+          label: { text: "Title (optional)", classes: "govuk-label--s" },
+          value: data['Title']
+        }) }}
+
+        {{ govukInput({
+          name: "yourFirstName",
+          label: { text: "First name", classes: "govuk-label--s"  },
+          value: data['yourFirstName']
+        }) }}
+
+        {{ govukInput({
+          name: "yourLastName",
+          label: { text: "Last name", classes: "govuk-label--s"  },
+          value: data['yourLastName']
+        }) }}
+
+        {{ govukInput({
+          name: "yourOrganisation",
+          label: { text: "Organisation (optional)", classes: "govuk-label--s"  },
+          value: data['yourOrganisation']
+        }) }}
+
+        {{ govukInput({
+          name: "yourPhoneNumber",
+          label: { text: "Phone number", classes: "govuk-label--s"  },
+          type: "tel",
+          classes: "govuk-input--width-20",
+          value: data['yourPhoneNumber']
+        }) }}
+
+
+        {{ govukInput({
+          name: "yourEmailAddress",
+          label: { text: "Email address", classes: "govuk-label--s"  },
+          type: "email",
+          classes: "govuk-input--width-20",
+          value: data['yourEmailAddress']
+        }) }}
+      
+         <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Continue"
+          })}}
+
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          })}}
+        </div>
+
+    </div>
+  </div>
+
+{% endblock %}

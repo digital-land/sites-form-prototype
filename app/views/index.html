@@ -6,14 +6,105 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-
-    {% include "govuk-prototype-kit/includes/homepage-top.njk" %}
-
     <h1 class="govuk-heading-xl">
       {{ serviceName }}
     </h1>
 
-    {% include "govuk-prototype-kit/includes/homepage-bottom.njk" %}
+    <p class="govuk-body">
+      This is a prototype of a service for submitting sites to an LPA's local plan. It is not a real service and any information you submit will not be stored or shared.</p>
+
+    {{ govukSummaryList({
+      card: {
+        title: { 
+          text: "Submit a site prototype — September 2026"
+        }
+      },
+      rows: [
+        {
+          key: { text: "End to end journey" },
+          value: { text: "Prototype showing the full end to end journey for the Submit a Site service" },
+          actions: {
+            items: [
+              {
+                href: "/start-page",
+                text: "Start page"
+              }
+            ]
+          }
+        }
+      ]
+    })}}
+
+    {{ govukSummaryList({
+      card: {
+        title: { 
+          text: "LPA templates — September 2026"
+        }
+      },
+      rows: [
+        {
+          key: { text: "Generic template" },
+          value: { text: "A generic template and header for LPAs who haven't supplied a logo or colour scheme" },
+          actions: {
+            items: [
+              {
+                href: "/lpa-template/planhamshire/your-contact-details",
+                text: "View"
+              }
+            ]
+          }
+        },
+        {
+          key: { text: "Calderdale Council — black and white" },
+          value: { text: "An LPA with a logo but no colour scheme" },
+          actions: {
+            items: [
+              {
+                href: "/lpa-template/calderdale/your-contact-details",
+                text: "View"
+              }
+            ]
+          }
+        },
+        {
+          key: { text: "Middlesbrough Council — colour" },
+          value: { text: "An LPA with a logo and brand colour" },
+          actions: {
+            items: [
+              {
+                href: "/lpa-template/middlesbrough/your-contact-details",
+                text: "View"
+              }
+            ]
+          }
+        },
+        {
+          key: { text: "Rossendale Borough Council – colour" },
+          value: { text: "An LPA with a logo and brand colour" },
+          actions: {
+            items: [
+              {
+                href: "/lpa-template/rossendale/your-contact-details",
+                text: "View"
+              }
+            ]
+          }
+        },
+        {
+          key: { text: "Sunderland City Council – colour" },
+          value: { text: "An LPA with a logo and brand colour" },
+          actions: {
+            items: [
+              {
+                href: "/lpa-template/sunderland/your-contact-details",
+                text: "View"
+              }
+            ]
+          }
+        }
+      ]
+    })}}
+
   </div>
 </div>
 

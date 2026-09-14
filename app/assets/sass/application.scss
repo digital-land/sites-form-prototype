@@ -4,6 +4,49 @@
 // 
 
 // Add extra styles here
+.lpa-branded-layout-template__body {
+  // background-color: govuk-colour('white');
+}
+
+.lpa-branded-layout__header {
+  // background-color: govuk-colour('white');
+}
+
+.lpa-branded-layout__header-container {
+  max-width: $govuk-page-width;
+  margin: 0 auto;
+  padding: 0 govuk-spacing(3);
+  @media #{govuk-from-breakpoint('tablet')} {
+    padding: 0 govuk-spacing(6);
+  }
+}
+
+.lpa-branded-layout__header-logo-container {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: flex-start;
+  @media #{govuk-from-breakpoint('tablet')} {
+    flex-flow: row wrap;
+    align-items: center;
+    height: 100%;
+  }
+  gap: govuk-spacing(3);
+  @include govuk-font-size(24);
+}
+
+.lpa-branded-layout__header-logo {
+  max-height: 60px;
+  max-width: 100%;
+
+  @media #{govuk-from-breakpoint('tablet')} {
+    max-width: 25vw;
+    font-size: 1.5rem;
+  }
+}
+
+.govuk-generic-header__homepage-link {
+  margin-right: 0;
+}
 
 // Colour palette
 $borchester-green: #044918;

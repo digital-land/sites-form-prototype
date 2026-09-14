@@ -1,0 +1,41 @@
+{#
+For guidance on how to use layouts see:
+https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
+#}
+
+{% extends "govuk-prototype-kit/layouts/unbranded.njk" %}
+
+{% set bodyClasses = "lpa-branded-layout-template__body" %}
+
+{% set LpaLogoHtml %}
+  <div class="lpa-branded-layout__header-logo-container">
+  {% if lpaDetails['logo'] %}
+      <img src="{{ lpaDetails['logo'] }}" alt="{{ lpaDetails['name'] }}" class="lpa-branded-layout__header-logo"/>
+  {% else %}
+    {{ lpaDetails['name'] }} — 
+  {% endif %}
+  {{ serviceName}}
+  </div>
+{% endset %}
+
+{% block head %}
+  {{ super() }}
+
+  <style>
+    .lpa-branded-layout__header {
+      background-color: {{ lpaDetails['colour'] }};
+    }
+  </style>
+{% endblock %}
+
+{% block header %}
+  {{ govukGenericHeader({
+    "logoHtml": LpaLogoHtml,
+    "url": "/",
+    "containerClasses": "lpa-branded-layout__header-container",
+    "classes": "lpa-branded-layout__header"
+  }) }}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

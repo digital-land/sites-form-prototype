@@ -1,0 +1,34 @@
+{% extends "layouts/lpa-branded.html" %}
+
+{% set pageName = "Site submitted" %}
+
+{% block pageTitle %}
+  Confirmation – {{ serviceName }}
+{% endblock %}
+
+{% block beforeContent %}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {{ govukPanel({
+        titleText: pageName,
+        html: "Your reference number<br><strong>4V8-R7X-6YH</strong>"
+      }) }}
+
+      <p class="govuk-body">You submitted site 4V8-R7X-6YH on 19 September 2026.</p>
+
+      <h2 class="govuk-heading-m">What happens next</h2>
+
+      
+      <p class="govuk-body">Planhampshire Borough Council has received your submmitted site.</p>
+
+      <p class="govuk-body">They will contact you if they need:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>any additional information</li>
+        <li>to arrange a site visit</li>
+      </ul>
+
+      
+{% endblock %}
