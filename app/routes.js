@@ -244,5 +244,7 @@ router.all('/lpa-template/:lpaName/:templateName', (req, res) => {
     lpaDetails.colour = "#ed0039"
   }
 
-  res.render(`lpa-template/${req.params.templateName}`, { lpaDetails });
+  res.render(`lpa-template/${req.params.templateName}`, { data: {
+    lpaDetails: lpaDetails
+  } });
 });
