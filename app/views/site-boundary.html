@@ -13,15 +13,6 @@
   <script>document.body.classList.add('im-is-loading')</script>
 {% endblock %}
 
-{% block head %}
-  <link href="/public/stylesheets/application.css" rel="stylesheet" type="text/css">
-  <link href="/plugin-assets/%40defra%2Finteractive-map/dist/css/index.css" rel="stylesheet" type="text/css">
-{% endblock %}
-
-{% block bodyStart %}
-  <script>document.body.classList.add('im-is-loading')</script>
-{% endblock %}
-
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
