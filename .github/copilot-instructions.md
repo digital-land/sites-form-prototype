@@ -16,7 +16,7 @@ This is a GOV.UK Prototype Kit application for collecting site suggestions for L
 - Pages use Nunjucks templating with GOV.UK Design System macros
 - Form pages follow this structure:
 ```html
-{% extends "layouts/borchester.html" %}
+{% extends "layouts/lpa-branded.html" %}
 {% block pageTitle %}Page name – {{ serviceName }}{% endblock %}
 {% block beforeContent %}{{ govukBackLink }}{% endblock %}
 {% block content %}

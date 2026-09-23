@@ -7,14 +7,21 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 
 {% set bodyClasses = "lpa-branded-layout-template__body" %}
 
+{% block pageTitle %}
+  {{ pageName }} – {{ serviceName }} — {{ data['lpaDetails']['name'] }}
+{% endblock %}
+
 {% set LpaLogoHtml %}
   <div class="lpa-branded-layout__header-logo-container">
-  {% if lpaDetails['logo'] %}
-      <img src="{{ lpaDetails['logo'] }}" alt="{{ lpaDetails['name'] }}" class="lpa-branded-layout__header-logo"/>
-  {% else %}
-    {{ lpaDetails['name'] }} — 
+  {% if data['lpaDetails']['logo'] %}
+    <img src="{{ data['lpaDetails']['logo'] }}" alt="{{ data['lpaDetails']['name'] }}" class="lpa-branded-layout__header-logo"/>
   {% endif %}
-  {{ serviceName}}
+    <span class="lpa-branded-layout__header-text">
+      {% if not data['lpaDetails']['logo'] %}
+        {{ data['lpaDetails']['name'] }} —
+      {% endif %}
+      {{ serviceName}}
+    </span>
   </div>
 {% endset %}
 
@@ -23,7 +30,7 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 
   <style>
     .lpa-branded-layout__header {
-      background-color: {{ lpaDetails['colour'] }};
+      background-color: {{ data['lpaDetails']['colour'] }};
     }
   </style>
 {% endblock %}
