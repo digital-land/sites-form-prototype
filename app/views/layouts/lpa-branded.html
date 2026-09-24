@@ -5,7 +5,7 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 
 {% extends "govuk-prototype-kit/layouts/unbranded.njk" %}
 
-{% set bodyClasses = "lpa-branded-layout-template__body" %}
+{% set bodyClasses = "lpa-branded-layout__body" %}
 
 {% block pageTitle %}
   {{ pageName }} – {{ serviceName }} — {{ data['lpaDetails']['name'] }}
@@ -26,13 +26,12 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 {% endset %}
 
 {% block head %}
-  {{ super() }}
-
   <style>
-    .lpa-branded-layout__header {
-      background-color: {{ data['lpaDetails']['colour'] }};
+    :root {
+      --brand-primary-colour: {{ data['lpaDetails']['colour'] if data['lpaDetails']['colour'] else "#0b0c0c" }};
     }
   </style>
+  {{ super() }}
 {% endblock %}
 
 {% block header %}
@@ -42,7 +41,33 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
     "containerClasses": "lpa-branded-layout__header-container",
     "classes": "lpa-branded-layout__header"
   }) }}
+
+  {{ govukPhaseBanner({
+    tag: {
+      text: "Prototype"
+    },
+    text: "This prototype is being tested with users in local planning authorities. It may change or stop working."
+  }) }}
 {% endblock %}
 
 {% block footer %}
+  {{ govukFooter({
+      classes: "lpa-branded-layout__footer",
+      meta: {
+        items: [
+          {
+            href: "/privacy-notice",
+            text: "Terms Of Use"
+          },
+          {
+            href: "/cookies",
+            text: "Cookies Policy"
+          },
+          {
+            href: "/accessibility-statement",
+            text: "Accessibility Statement"
+          }
+        ]
+      }
+    }) }}
 {% endblock %}

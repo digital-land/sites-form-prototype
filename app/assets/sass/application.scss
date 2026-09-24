@@ -1,15 +1,14 @@
 //
 // For guidance on how to add CSS and SCSS see:
 // https://prototype-kit.service.gov.uk/docs/adding-css-javascript-and-images
-// 
 
 // Add extra styles here
-.lpa-branded-layout-template__body {
-  // background-color: govuk-colour('white');
+.lpa-branded-layout__body {
+  background-color: govuk-colour('white');
 }
 
 .lpa-branded-layout__header {
-  // background-color: govuk-colour('white');
+  background-color: var(--brand-primary-colour);
 }
 
 .lpa-branded-layout__header-container {
@@ -48,24 +47,11 @@
   margin-right: 0;
 }
 
-// Colour palette
-$borchester-green: #044918;
-$borchester-yellow: #ECA93E;
-$borchester-off-white: #FAF1E6;
-
-.borchester-template__body {
-  background-color: $borchester-off-white;
+.lpa-branded-layout__footer {
+  border-color: var(--brand-primary-colour);
 }
 
-.borchester-header {
-  background-color: $borchester-green;
-  border-color: $borchester-off-white;
-}
-
-.borchester-header__container {
-  border-color: $borchester-yellow;
-}
-
-.borchester-header__logo {
-  padding: 10px 0;
+.lpa-branded-layout__footer .govuk-footer__crown,
+.lpa-branded-layout__footer .govuk-footer__copyright-logo {
+  display: none;
 }
