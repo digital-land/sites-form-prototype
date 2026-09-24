@@ -137,7 +137,6 @@ async function initialiseMap() {
     transformRequest,
     center: [-1.6, 53.1],
     zoom: 6,
-    containerHeight: '40vh',
     hasExitButton: true,
     plugins: [datasetsPlugin, drawPlugin, interactPlugin]
   })
