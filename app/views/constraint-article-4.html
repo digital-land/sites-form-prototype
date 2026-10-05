@@ -1,0 +1,78 @@
+{% extends "layouts/lpa-branded.html" %}
+
+{% set pageName = "An Article 4 direction area constraint may apply to your site" %}
+
+{% block beforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: "javascript:window.history.back()"
+  }) }}
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">{{ pageName }}</h1>
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: "Reference"
+            },
+            value: {
+              text: "A4D001"
+            }
+          },
+          {
+            key: {
+              text: "Name"
+            },
+            value: {
+              text: "Holcombe village"
+            }
+          }
+        ]
+      })}}
+      
+      <form class="form" action="/constraint-conservation-area" method="post">
+        {{ govukRadios({
+          name: "conservationAreaConstraintResponse",
+          values: data['conservationAreaConstraintResponse'],
+          fieldset: {
+            legend: {
+              text: "Will you mitigate this constraint?",
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          hint: {
+            text: "If you select no, a planning officer may contact you to ask for more information"
+          },
+          items: [
+            {
+              value: "yes",
+              text: "Yes"
+            },
+            {
+              value: "no",
+              text: "No"
+            }
+          ]
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: "Continue"
+          }) }}
+
+          {{ govukButton({
+            text: "Save and exit",
+            href: "/save-and-exit",
+            classes: "govuk-button--secondary"
+          }) }}
+        </div>
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

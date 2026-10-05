@@ -32,19 +32,83 @@
     <div class="govuk-grid-column-two-thirds">
       <h2 class="govuk-heading-m">Check potential constraints</h2>
 
-      {% set floodZone1Status %}{{ "Complete" if data.floodZone1ConstraintResponse else "Incomplete" }}{% endset %}
-      {% set floodZone1Tag %}{{ "govuk-tag--blue" if data.floodZone1ConstraintResponse else "govuk-tag--grey" }}{% endset %}
+      {% set article4Direction1Status %}{{ "Complete" if data.article4Direction1Response else "Incomplete" }}{% endset %}
+      {% set article4Direction1Tag %}{{ "govuk-tag--blue" if data.article4Direction1Response else "govuk-tag--grey" }}{% endset %}
+
+      {% set article4Direction2Status %}{{ "Complete" if data.article4Direction2Response else "Incomplete" }}{% endset %}
+      {% set article4Direction2Tag %}{{ "govuk-tag--blue" if data.article4Direction2Response else "govuk-tag--grey" }}{% endset %}
 
       {% set conservationAreaStatus %}{{ "Complete" if data.conservationAreaConstraintResponse else "Incomplete" }}{% endset %}
       {% set conservationAreaTag %}{{ "govuk-tag--blue" if data.conservationAreaConstraintResponse else "govuk-tag--grey" }}{% endset %}
+
+      {% set floodZone1Status %}{{ "Complete" if data.floodZone1ConstraintResponse else "Incomplete" }}{% endset %}
+      {% set floodZone1Tag %}{{ "govuk-tag--blue" if data.floodZone1ConstraintResponse else "govuk-tag--grey" }}{% endset %}
+
+      {% set floodZone2Status %}{{ "Complete" if data.floodZone2ConstraintResponse else "Incomplete" }}{% endset %}
+      {% set floodZone2Tag %}{{ "govuk-tag--blue" if data.floodZone2ConstraintResponse else "govuk-tag--grey" }}{% endset %}
+
+      {% set greenbeltStatus %}{{ "Complete" if data.greenbeltResponse else "Incomplete" }}{% endset %}
+      {% set greenbeltTag %}{{ "govuk-tag--blue" if data.greenbeltResponse else "govuk-tag--grey" }}{% endset %}
+
+      <h3 class="govuk-heading-m">Article 4 direction area</h3>
 
       {{ govukTaskList({
         items: [
           {
             title: {
-              text: "Flood zone 1"
+              html: "<strong>A4D001:</strong> Holcombe village"
             },
-            href: "/constraint-flood-zone-1",
+            href: "/constraint-article-4",
+            status: {
+              tag: {
+                text: article4Direction1Status,
+                classes: article4Direction1Tag
+              }
+            }
+          },
+          {
+            title: {
+              html: "<strong>A4D003:</strong> Bury borough HMO"
+            },
+            href: "/constraint-article-4",
+            status: {
+              tag: {
+                text: article4Direction2Status,
+                classes: article4Direction2Tag
+              }
+            }
+          }
+        ]
+      })}}
+
+      <h3 class="govuk-heading-m">Conservation area</h3>
+
+      {{ govukTaskList ({
+        items: [
+          {
+            title: {
+              html: "<strong>CA005:</strong> Holcombe village"
+            },
+            href: "#",
+            status: {
+              tag: {
+                text: conservationAreaStatus,
+                classes: conservationAreaTag
+              }
+            }
+          }
+        ]
+      })}}
+
+      <h3 class="govuk-heading-m">Flood risk zone</h3>
+
+      {{ govukTaskList ({
+        items: [
+          {
+            title: {
+              html: "<strong>444566/2</strong>"
+            },
+            href: "#",
             status: {
               tag: {
                 text: floodZone1Status,
@@ -54,19 +118,37 @@
           },
           {
             title: {
-              text: "Conservation area"
+              html: "<strong>196140/3</strong>"
             },
-            href: "/constraint-conservation-area",
+            href: "#",
             status: {
               tag: {
-                text: conservationAreaStatus,
-                classes: conservationAreaTag
+                text: floodZone2Status,
+                classes: floodZone2Tag
               }
             }
-
           }
         ]
-      }) }}
+      })}}
+
+      <h3 class="govuk-heading-m">Green belt</h3>
+
+      {{ govukTaskList ({
+        items: [
+          {
+            title: {
+              html: "<strong> E08000002/Merseyside and Greater Manchester:</strong> Bury"
+            },
+            href: "#",
+            status: {
+              tag: {
+                text: greenbeltStatus,
+                classes: greenbeltTag
+              }
+            }
+          }
+        ]
+      })}}
 
       <div class="govuk-button-group">
         {{ govukButton({
