@@ -1,0 +1,69 @@
+{% extends "layouts/lpa-branded.html" %}
+
+{% set pageName = "When are the tenants expected to move out of the site?" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    
+    <form action="/potential-site-use" method="post">
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading">
+              {{ pageName }}
+            </h1>
+          </legend>
+
+          {{ govukDateInput({
+            id: "tenantsVacant",
+            namePrefix: "tenantsVacant",
+            values: {
+              month: data['tenantsVacant-month'],
+              year: data['tenantsVacant-year']
+            },
+            fieldset: {
+              legend: {
+                classes: "govuk-fieldset__legend--m"
+              }
+            },
+            items: [
+            {
+              name: "month",
+              label: "Month",
+              classes: "govuk-input--width-2"
+            },
+            {
+              name: "year",
+              label: "Year",
+              classes: "govuk-input--width-4"
+            }
+            ]
+          }) }}
+        </fieldset>
+      </div>
+
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Continue"
+        })}}
+        
+        {{ govukButton({
+          text: "Save and exit",
+          href: "/save-and-exit",
+          classes: "govuk-button--secondary"
+        })}}
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+    
+    

@@ -1,6 +1,6 @@
 {% extends "layouts/lpa-branded.html" %}
 
-{% set pageName = "CONTENET TBC Provide usage description" %}
+{% set pageName = "Provide usage description" %}
 
 {% block pageTitle %}
 {{ pageName }} – {{ serviceName }}
@@ -18,7 +18,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     
-    <form action="/existing-lease" method="post">
+    <form action="/current-site-status" method="post">
       {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
       
       {{ govukCharacterCount({

@@ -1,6 +1,6 @@
 {% extends "layouts/lpa-branded.html" %}
 
-{% set pageName = "CONTENT TBC When do you expect the first units to be ready on site? (optional)" %}
+{% set pageName = " When do you expect the first units to be ready on site?" %}
 
 {% block pageTitle %}
 {{ pageName }} – {{ serviceName }}
@@ -31,6 +31,10 @@
             {{ govukDateInput({
               id: "unitsReady",
               namePrefix: "unitsReady",
+              values: {
+                month: data['unitsReady-month'],
+                year: data['unitsReady-year']
+              },
               fieldset: {
                 legend: {
                   classes: "govuk-fieldset__legend--m"

@@ -1,6 +1,6 @@
 {% extends "layouts/lpa-branded.html" %}
 
-{% set pageName = "CONTENT TBC Provide usage description" %}
+{% set pageName = "Provide a description of the proposed site usage" %}
 
 {% block pageTitle %}
 {{ pageName }} – {{ serviceName }}
@@ -18,13 +18,14 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     
-    <form action="/site-joining" method="post">
+    <form action="/next-conditional-page" method="post">
       {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
       
       {{ govukCharacterCount({
         name: "potentialOtherSiteUse",
-        id: "with-hint",
-        maxlength: 250,
+        value: data['potentialOtherSiteUse'],
+        id: "potentialOtherSiteUse",
+        maxlength: 750,
         label: {
           text: pageName,
           classes: "govuk-label--l",

@@ -1,10 +1,6 @@
 {% extends "layouts/lpa-branded.html" %}
 
-{% set pageName = " CONTENT TBCHow manyhomes will this site create?" %}
-
-{% block pageTitle %}
-{{ pageName }} – {{ serviceName }}
-{% endblock %}
+{% set pageName = "How many homes will this site create?" %}
 
 {% block beforeContent %}
 {{ govukBackLink({
@@ -23,8 +19,9 @@
       
       {{ govukCharacterCount({
         name: "howManyHomes",
-        id: "with-hint",
-        maxlength: 250,
+        id: "howManyHomes",
+        value: data['howManyHomes'],
+        maxlength: 750,
         label: {
           text: pageName,
           classes: "govuk-label--l",
@@ -46,7 +43,6 @@
       
     </form>
     
-  </div> </div>
-  {% endblock %}
-  
-  
+  </div>
+</div>
+{% endblock %}

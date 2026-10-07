@@ -16,7 +16,6 @@ router.post('/their-organisation', (req, res, next) => {
   }
 })
 
-
 router.post('/their-connection-controller', (req, res, next) => {
   if (req.session.data['theirConnection'] !== 'Other') {
     return res.redirect('/their-contact-details')
@@ -25,7 +24,6 @@ router.post('/their-connection-controller', (req, res, next) => {
   }
 })
 
-
 router.post('/your-connection-controller', (req, res, next) => {
   if (req.session.data['yourConnection'] !== 'Other') {
     return res.redirect('/your-contact-details')
@@ -33,11 +31,6 @@ router.post('/your-connection-controller', (req, res, next) => {
     return res.redirect('/your-other-connection')
   }
 })
-
-
-
-
-
 
 router.post('/find-address', (req, res, next) => {
   if (req.session.data['siteBoundaryChoice'] === 'postcode') {
@@ -90,14 +83,14 @@ router.post('/other-constraints', (req, res, next) => {
 router.post('/existing-lease-controller', (req, res, next) => {
   const selectedUses = req.body['currentSiteUse[]'] || req.body.currentSiteUse || req.session.data['currentSiteUse']
   const isOtherSuiGeneris = Array.isArray(selectedUses)
-    ? selectedUses.includes('Other (Sui generis)')
-    : selectedUses === 'Other (Sui generis)'
+    ? selectedUses.includes('Other')
+    : selectedUses === 'Other'
 
   if (isOtherSuiGeneris) {
     return res.redirect('/other-usage-description')
   }
 
-  return res.redirect('/existing-lease')
+  return res.redirect('/current-site-status')
 })
 
 
@@ -110,23 +103,23 @@ router.post('/potential-use-controller', (req, res) => {
   const selectedUses = req.session.data['proposedSiteUse'] || [];
 
   const isJobs = [
-    'Class B2: General industry',
-    'Class B8: Storage and distribution',
-    'Class C1: Hotels',
-    'Class C2: Residential institutions, for example care homes, boarding schools and colleges, hospitals or nursing homes',
-    'Class C2a: Secure residential institutions, for example prisons, young offenders institutions, detention centres or secure training centres',
-    'Class E: Commercial, Business and Service',
-    'Class F1: Learning and non-residential institutions, for example schools, museums, libraries or art galleries'
-
+    'Education',
+    'General industrial',
+    'Health',
+    'Light industrial',
+    'Office',
+    'Retail',
+    'Sports and leisure',
+    'Warehousing or storage and distribution'
   ];
 
   const isHomes = [
-    'Class C3: Dwelling-houses',
-    'Class C4: Houses in multiple occupation'
+    'Residential',
+    'Traveller accommodation'
   ];
 
   const isOtherSuiGeneris = [
-    'Other (Sui generis)'
+    'Other'
   ];
 
   const pages = [];
@@ -137,21 +130,20 @@ router.post('/potential-use-controller', (req, res) => {
   const hasOther = selectedUses.some(use => isOtherSuiGeneris.includes(use));
   console.log('has other', hasOther);
 
-
-  if (hasJobs) {
-    pages.push('/how-many-jobs');
+  if (hasOther) {
+    pages.push('/potential-other-site-use');
   }
 
   if (hasHomes) {
     pages.push('/how-many-homes');
   }
 
-  if (hasOther) {
-    pages.push('/potential-other-site-use');
+  if (hasJobs) {
+    pages.push('/how-many-jobs');
   }
 
-  // always redirect to site joining page at the end of the flow
-  pages.push('/site-joining');
+  // always redirect to landowner support page at the end of the flow
+  pages.push('/landowner-support');
 
   const nextPage = pages.shift();
   req.session.data.remainingPages = pages;
@@ -178,7 +170,7 @@ router.post('/next-conditional-page', (req, res) => {
 
 
 router.post('/multiple-owners-controller', (req, res, next) => {
-  if (req.session.data['multipleOwners'] !== 'yes') {
+  if (req.session.data['multipleOwners'] !== 'Yes') {
     return res.redirect('/access-issues')
   } else {
     return res.redirect('/multiple-owners-details')
@@ -186,17 +178,8 @@ router.post('/multiple-owners-controller', (req, res, next) => {
 })
 
 
-router.post('/vehicle-access-controller', (req, res, next) => {
-  if (req.session.data['vehicleAccess'] === 'Yes') {
-    return res.redirect('/constraints-pollution')
-  } else {
-    return res.redirect('/provide-vehicle-access')
-  }
-})
-
-
 router.post('/provide-vehicle-access-controller', (req, res, next) => {
-  if (req.session.data['provideVehicleAccess'] === 'Yes') {
+  if (req.session.data['provideVehicleAccess'] === 'No') {
     return res.redirect('/explain-vehicle-access')
   } else {
     return res.redirect('/constraints-pollution')

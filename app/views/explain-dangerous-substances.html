@@ -5,49 +5,48 @@
 
 
 {% block beforeContent %}
-  {{ govukBackLink({
+{{ govukBackLink({
   text: "Back",
   href: "javascript:window.history.back()"
 }) }}
 {% endblock %}
 
 {% block content %}
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-
-      <form action="/site-blockers" method="post">
-    {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
-
-{{ govukCharacterCount({
-  name: "dangerousSubstances",
-  id: "with-hint",
-  maxlength: 750,
-  label: {
-    text: pageName,
-    classes: "govuk-label--l",
-    isPageHeading: true
-  },
-  hint: {
-    classes: "govuk-body",
-    html: 'Find out if your site is covered by the <a href="https://www.hse.gov.uk/comah/" class="govuk-link" target="_blank">Control of Major Accident Hazards (COMAH) regulations (opens in new tab)</a>.'
-  }
-}) }}
-
-<div class="govuk-button-group">
-          {{ govukButton({
-            text: "Continue"
-          })}}
-
-          {{ govukButton({
-            text: "Save and exit",
-            href: "/save-and-exit",
-            classes: "govuk-button--secondary"
-          })}}
-        </div>
-
-        </form>
-
-        </div> </div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    
+    <form action="/site-blockers" method="post">
+      {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+      
+      {{ govukCharacterCount({
+        name: "dangerousSubstances",
+        value: data['dangerousSubstances'],
+        maxlength: 750,
+        label: {
+          text: pageName,
+          classes: "govuk-label--l",
+          isPageHeading: true
+        },
+        hint: {
+          classes: "govuk-body",
+          html: 'Find out if your site is covered by the <a href="https://www.hse.gov.uk/comah/" class="govuk-link" target="_blank">Control of Major Accident Hazards (COMAH) regulations (opens in new tab)</a>.'
+        }
+      }) }}
+      
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Continue"
+        })}}
+        
+        {{ govukButton({
+          text: "Save and exit",
+          href: "/save-and-exit",
+          classes: "govuk-button--secondary"
+        })}}
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}
-
+  
+  

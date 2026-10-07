@@ -2,10 +2,6 @@
 
 {% set pageName = "Site submitted" %}
 
-{% block pageTitle %}
-  Confirmation – {{ serviceName }}
-{% endblock %}
-
 {% block beforeContent %}
 {% endblock %}
 
@@ -17,11 +13,10 @@
         html: "Your reference number<br><strong>4V8-R7X-6YH</strong>"
       }) }}
 
-      <p class="govuk-body">You submitted site 4V8-R7X-6YH on 19 September 2026.</p>
+      <p class="govuk-body">You submitted site 4V8-R7X-6YH on {{ "today" | govukDate }}.</p>
 
       <h2 class="govuk-heading-m">What happens next</h2>
 
-      
       <p class="govuk-body">Planhampshire Borough Council has received your submmitted site.</p>
 
       <p class="govuk-body">They will contact you if they need:</p>
@@ -30,5 +25,13 @@
         <li>to arrange a site visit</li>
       </ul>
 
-      
+      <p class="govuk-body"><a href="#">What do you think of this service?</a> (takes 30 seconds)</p>
+
+      {{ govukButton({
+        text: "Print this page",
+        href: "#",
+        classes: "govuk-button--secondary"
+      })}}
+    </div>
+  </div>
 {% endblock %}

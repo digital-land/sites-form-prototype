@@ -5,48 +5,44 @@
 
 
 {% block beforeContent %}
-  {{ govukBackLink({
+{{ govukBackLink({
   text: "Back",
   href: "javascript:window.history.back()"
 }) }}
 {% endblock %}
 
 {% block content %}
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-
-      <form action="/constraints-pollution" method="post">
-    {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
-
-{{ govukCharacterCount({
-  name: "explainVehicleAccess",
-  id: "with-hint",
-  maxlength: 750,
-  label: {
-    text: pageName,
-    classes: "govuk-label--l",
-    isPageHeading: true
-  }
-  
-
-  
-}) }}
-
-<div class="govuk-button-group">
-          {{ govukButton({
-            text: "Continue"
-          })}}
-
-          {{ govukButton({
-            text: "Save and exit",
-            href: "/save-and-exit",
-            classes: "govuk-button--secondary"
-          })}}
-        </div>
-
-        </form>
-
-        </div> </div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    
+    <form action="/constraints-pollution" method="post">
+      {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+      
+      {{ govukCharacterCount({
+        name: "explainVehicleAccess",
+        value: data['explainVehicleAccess'],
+        maxlength: 750,
+        label: {
+          text: pageName,
+          classes: "govuk-label--l",
+          isPageHeading: true
+        }
+      }) }}
+      
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Continue"
+        })}}
+        
+        {{ govukButton({
+          text: "Save and exit",
+          href: "/save-and-exit",
+          classes: "govuk-button--secondary"
+        })}}
+      </div>
+      
+    </form>
+    
+  </div>
+</div>
 {% endblock %}
-

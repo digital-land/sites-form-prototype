@@ -23,7 +23,15 @@
               text: "Reference"
             },
             value: {
-              text: "St James Conservation Area"
+              text: "CA005"
+            }
+          },
+          {
+            key: {
+              text: "Name"
+            },
+            value: {
+              text: "Holcolmbe Village"
             }
           }
         ]
@@ -31,8 +39,8 @@
       
       <form class="form" action="/site-constraints" method="post">
         {{ govukCharacterCount({
-          name: "floodZone1Mitigation",
-          value: data['floodZone1Mitigation'],
+          name: "conservationAreaMitigation",
+          value: data['conservationAreaMitigation'],
           maxlength: 200,
           label: {
             text: pageName,

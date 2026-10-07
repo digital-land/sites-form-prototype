@@ -19,6 +19,7 @@
       <form action="/existing-access" method="post">
         {{ govukRadios({
           name: "accessIssues",
+          value: data['accessIssues'],
           fieldset: {
             legend: {
               text: pageName,

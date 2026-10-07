@@ -19,6 +19,7 @@
       <form action="/site-marketed-controller" method="post">
         {{ govukRadios({
           name: "siteMarketed",
+          value: data['siteMarketed'],
           fieldset: {
             legend: {
               text: pageName,

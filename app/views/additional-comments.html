@@ -3,58 +3,50 @@
 {% set pageName = "Add any other comments about the site (optional)
 " %}
 
-
-
 {% block beforeContent %}
-  {{ govukBackLink({
-    text: "Back",
-    href: "javascript:window.history.back()"
-  }) }}
+{{ govukBackLink({
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      
-      <form class="form" action="/check-answers" method="post">
-        <div class="govuk-form-group">
-          <h1 class="govuk-label-wrapper">
-            <label class="govuk-label govuk-label--l" for="additional-comments">
-              {{ pageName }}
-            </label>
-          </h1>
-          {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
-
-{{ govukCharacterCount({
-  name: "additionalComments",
-  id: "with-hint",
-  maxlength: 750,
-  label: {
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
     
-    classes: "govuk-label--l",
-    isPageHeading: true
-  }
-  
-
-  
-}) }}
-          
-
-        </div>
-
-        <div class="govuk-button-group">
-          {{ govukButton({
-            text: "Continue"
-          })}}
-
-          {{ govukButton({
-            text: "Save and exit",
-            href: "/save-and-exit",
-            classes: "govuk-button--secondary"
-          })}}
-        </div>
-      </form>
-
-    </div>
+    <form class="form" action="/check-answers" method="post">
+      <div class="govuk-form-group">
+        <h1 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--l" for="additional-comments">
+            {{ pageName }}
+          </label>
+        </h1>
+        {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+        
+        {{ govukCharacterCount({
+          name: "additionalComments",
+          value: data['additionalComments'],
+          maxlength: 750,
+          label: {
+            classes: "govuk-label--l",
+            isPageHeading: true
+          }
+        }) }}
+      </div>
+      
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Continue"
+        })}}
+        
+        {{ govukButton({
+          text: "Save and exit",
+          href: "/save-and-exit",
+          classes: "govuk-button--secondary"
+        })}}
+      </div>
+    </form>
+    
   </div>
+</div>
 {% endblock %}

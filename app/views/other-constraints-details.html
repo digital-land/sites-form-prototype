@@ -2,8 +2,6 @@
 
 {% set pageName = " Tell us about the other constraints and how you will mitigate them" %}
 
-
-
 {% block beforeContent %}
   {{ govukBackLink({
     text: "Back",
@@ -17,8 +15,8 @@
       
       <form class="form" action="/current-use" method="post">
         {{ govukCharacterCount({
-          name: "otherConstraintsMitigation",
-          value: data['otherConstraintsMitigation'],
+          name: "otherConstraintsDetails",
+          value: data['otherConstraintsDetails'],
           maxlength: 750,
           label: {
             text: pageName,

@@ -1,6 +1,6 @@
 {% extends "layouts/lpa-branded.html" %}
 
-{% set pageName = "When do you expect the development to be complete? (optional)" %}
+{% set pageName = "When do you expect the development to be complete?" %}
 
 {% block pageTitle %}
 {{ pageName }} – {{ serviceName }}
@@ -31,6 +31,10 @@
             {{ govukDateInput({
               id: "developmentFinished",
               namePrefix: "developmentFinished",
+              values: {
+                month: data['developmentFinished-month'],
+                year: data['developmentFinished-year']
+              },
               fieldset: {
                 legend: {
                   classes: "govuk-fieldset__legend--m"

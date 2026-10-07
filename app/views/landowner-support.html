@@ -1,45 +1,44 @@
 {% extends "layouts/lpa-branded.html" %}
 
-{% set pageName = "Will you provide new vehicle access to the site?" %}
-
-
+{% set pageName = "Does the landowner support the development of this land?" %}
 
 {% block beforeContent %}
   {{ govukBackLink({
-    text: "Back",
-    href: "javascript:window.history.back()"
-  }) }}
+  text: "Back",
+  href: "javascript:window.history.back()"
+}) }}
 {% endblock %}
 
 {% block content %}
+
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      
-      <form action="/provide-vehicle-access-controller" method="post">
+
+      <form action="/site-joining" method="post">
         {{ govukRadios({
-          name: "provideVehicleAccess",
+          name: "landownerSupport",
+          value: data['landownerSupport'],
           fieldset: {
             legend: {
               text: pageName,
               classes: "govuk-fieldset__legend--l"
             }
           },
-          
-
           items: [
             {
-              value: "Yes",
+              value: "yes",
               text: "Yes"
             },
             {
-              value: "No",
+              value: "no",
               text: "No"
+            },
+            {
+              value: "I do not know",
+              text: "I do not know"
             }
           ]
         }) }}
-
-        
-    
 
         <div class="govuk-button-group">
           {{ govukButton({
@@ -53,7 +52,6 @@
           })}}
         </div>
       </form>
-
     </div>
   </div>
 {% endblock %}

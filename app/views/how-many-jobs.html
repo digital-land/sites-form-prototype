@@ -1,6 +1,6 @@
 {% extends "layouts/lpa-branded.html" %}
 
-{% set pageName = "How many permanent jobs will this site create?" %}
+{% set pageName = " How much non-residential floorspace are you proposing?" %}
 
 {% block pageTitle %}
 {{ pageName }} – {{ serviceName }}
@@ -23,14 +23,17 @@
       
       {{ govukCharacterCount({
         name: "howManyJobs",
-        id: "with-hint",
-        maxlength: 250,
+        id: "howManyJobs",
+        value: data['howManyJobs'],
+        maxlength: 750,
         label: {
           text: pageName,
           classes: "govuk-label--l",
           isPageHeading: true
+        },
+        hint: {
+          text: "Enter the gross internal area (GIA) in square metres (m²) or the total site area in hectares (ha)."
         }
-
       }) }}
       
       <div class="govuk-button-group">
@@ -47,7 +50,6 @@
       
     </form>
     
-  </div> </div>
-  {% endblock %}
-  
-  
+  </div>
+</div>
+{% endblock %}
