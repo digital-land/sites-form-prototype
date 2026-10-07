@@ -72,7 +72,7 @@ router.post('/constraint-conservation-area', (req, res, next) => {
 })
 
 router.post('/other-constraints', (req, res, next) => {
-  if (req.session.data['hasOtherConstraints'] === 'yes') {
+  if (req.session.data['hasOtherConstraints'] === 'Yes') {
     return res.redirect('/other-constraints-details')
   } else if (req.session.data['hasOtherConstraints'] === 'no') {
     return res.redirect('/current-use')
