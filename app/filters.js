@@ -24,3 +24,16 @@ addFilter('json', (value, spaces) => {
   return JSON.stringify(value, null, spaces)
     .replace(/</g, '\\u003c')
 })
+
+addFilter('bullets', (value, classes) => {
+  let listItemsHtml = ""
+  if (Array.isArray(value)) {
+    listItemsHtml += value.map(item => `<li>${item}</li>`).join('')
+  } else {
+    listItemsHtml += `<li>${value}</li>`
+  }
+
+  listItemsHtml = `<ul class="govuk-list govuk-list--bullet ${classes || ''}">${listItemsHtml}</ul>`
+
+  return listItemsHtml
+}, { renderAsHtml: true })
