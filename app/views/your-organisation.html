@@ -19,6 +19,7 @@
       <form action="/your-connection" method="post">
         {{ govukRadios({
           name: "yourOrganisationType",
+          value: data['yourOrganisationType'],
           fieldset: {
             legend: {
               text: pageName,

@@ -28,7 +28,8 @@
             text: "For example, AA3 1AB."
           },
           id: "postcode",
-          name: "findAddressPostcode"
+          name: "findAddressPostcode",
+          value: data['findAddressPostcode']
         }) }}
 
         {{ govukInput({
@@ -40,7 +41,8 @@
             text: "For example, 15 or Prospect Cottage."
           },
           id: "building",
-          name: "findAddressBuilding"
+          name: "findAddressBuilding",
+          value: data['findAddressBuilding']
         }) }}
 
         <p><a href="/site-address" class="govuk-link">Enter address manually</a></p>

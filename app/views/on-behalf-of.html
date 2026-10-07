@@ -17,6 +17,7 @@
       <form action="/their-organisation" method="post">
         {{ govukRadios({
           name: "onBehalfOf",
+          value: data['onBehalfOf'],
           fieldset: {
             legend: {
               text: pageName,

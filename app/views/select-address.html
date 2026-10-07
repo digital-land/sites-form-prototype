@@ -18,7 +18,7 @@
 
       <p class="govuk-body">6 addresses found for <strong>{{ data['findAddressPostcode'] }}</strong>{% if data['findAddressBuilding'] %} and <strong>{{ data['findAddressBuilding'] }}</strong>{% endif %}. <a href="/find-address">Search again</a></p>
 
-      <form class="form" action="/site-boundary-constraints" method="post">
+      <form class="form" action="/site-constraints" method="post">
         {{ govukSelect({
           name: "selectedAddress",
           label: {

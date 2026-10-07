@@ -19,6 +19,7 @@
       <form action="/your-connection-controller" method="post">
         {{ govukRadios({
           name: "yourConnection",
+          value: data['yourConnection'],
           fieldset: {
             legend: {
               text: pageName,

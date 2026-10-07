@@ -15,6 +15,7 @@
     <form action="/existing-lease" method="post">
       {{ govukRadios({
         name: "currentSiteStatus",
+        value: data['currentSiteStatus'],
         fieldset: {
           legend: {
             text: pageName,
