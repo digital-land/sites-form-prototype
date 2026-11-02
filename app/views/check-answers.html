@@ -1,5 +1,7 @@
 {% extends "layouts/lpa-branded.html" %}
 
+{% from "components/bullet-list/macro.njk" import appBulletList %}
+
 {% set pageName = "Check your answers before submitting your site" %}
 
 {% block beforeContent %}
@@ -237,7 +239,7 @@
       }) }}
 
       <h2 class="govuk-heading-m">Site use</h2>
-      {% set currentUseHtml = data['currentSiteUse'] | bullets if data['currentSiteUse'] else "Not provided" %}
+      {% set currentUseHtml = appBulletList({ items: data['currentSiteUse'] }) if data['currentSiteUse'] else "Not provided" %}
 
       {% set siteUseRows = [
         {
@@ -284,7 +286,7 @@
         ]) %}
       {% endif %}
 
-      {% set proposedUseHtml = data['proposedSiteUse'] | bullets if data['proposedSiteUse'] else "Not provided" %}
+      {% set proposedUseHtml = appBulletList({ items: data['proposedSiteUse'] }) if data['proposedSiteUse'] else "Not provided" %}
 
       {% set siteUseRows = siteUseRows.concat([
         {
@@ -405,7 +407,7 @@
         ]) %}
       {% endif %}
 
-      {% set additionalConstraintsHtml = data['siteBlockers'] | bullets if data['siteBlockers'] else "Not provided" %}
+      {% set additionalConstraintsHtml = appBulletList({ items: data['siteBlockers'] }) if data['siteBlockers'] else "Not provided" %}
 
       {% set additionalSiteInfoRows = additionalSiteInfoRows.concat([
         {
