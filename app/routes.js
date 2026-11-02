@@ -74,11 +74,10 @@ router.post('/constraint-conservation-area', (req, res, next) => {
 router.post('/other-constraints', (req, res, next) => {
   if (req.session.data['hasOtherConstraints'] === 'Yes') {
     return res.redirect('/other-constraints-details')
-  } else if (req.session.data['hasOtherConstraints'] === 'no') {
+  } else {
     return res.redirect('/current-use')
   }
 })
-
 
 router.post('/existing-lease-controller', (req, res, next) => {
   const selectedUses = req.body['currentSiteUse[]'] || req.body.currentSiteUse || req.session.data['currentSiteUse']
