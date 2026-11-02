@@ -1,0 +1,24 @@
+{#
+  Renders a bulleted list using the GOV.UK list styles
+
+  Options:
+  * `items` – array of strings, or of objects with `text` or `html` and
+    optional `classes` and `attributes`. A single string is also accepted
+  * `id` – id for the list
+  * `classes` – classes to add to the list
+  * `attributes` – HTML attributes to add to the list
+
+  @example
+  ```njk
+  {{ appBulletList({
+    items: [
+      "Housing",
+      { html: "<strong>Employment</strong>", classes: "app-list-item--highlight" }
+    ]
+  }) }}
+  ```
+#}
+{% macro appBulletList(params) %}
+  {%- include './template.njk' -%}
+{% endmacro %}
+

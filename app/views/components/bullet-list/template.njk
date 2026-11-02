@@ -1,0 +1,16 @@
+{% from "govuk/macros/attributes.njk" import govukAttributes -%}
+
+{%- set items = [params.items] if params.items is string else params.items -%}
+
+<ul {%- if params.id %} id="{{ params.id }}"{% endif %} class="govuk-list govuk-list--bullet {%- if params.classes %} {{ params.classes }}{% endif %}"
+  {{- govukAttributes(params.attributes) }}>
+  {%- for item in items %}
+  {%- if item %}
+  {%- set item = { text: item } if (item is string or item is number) else item %}
+  <li {%- if item.classes %} class="{{ item.classes }}"{% endif %}
+    {{- govukAttributes(item.attributes) }}>
+    {{- item.html | safe | trim | indent(4) if item.html else item.text -}}
+  </li>
+  {%- endif %}
+  {%- endfor %}
+</ul>
