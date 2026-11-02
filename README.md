@@ -10,7 +10,7 @@ The prototype is created and maintained by the Plan Making team at MHCLG.
 
 ## Run locally
 
-You’ll need Node.js and npm installed.
+You’ll need Node.js 26 and npm installed. If you use nvm, run `nvm use` to pick up the version in `.nvmrc`.
 
 1. Install dependencies:
 
@@ -24,7 +24,7 @@ You’ll need Node.js and npm installed.
    cp .env.example .env
    ```
 
-   Replace the placeholder values for `ORDNANCE_SURVEY_API_SECRET` and `ORDNANCE_SURVEY_API_KEY` in `.env` with your Ordnance Survey credentials. These are used for the site-boundary map.
+   Replace the placeholder value for `ORDNANCE_SURVEY_API_KEY` in `.env` with your Ordnance Survey API key. This is used for the site-boundary map.
 
 3. Start the development server:
 
@@ -33,3 +33,18 @@ You’ll need Node.js and npm installed.
    ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Deploy to Heroku
+
+The `Procfile` starts the prototype with `npm start`, and `package.json` pins
+Node.js 26. Heroku sets `NODE_ENV=production` and `PORT` for you, so the
+Prototype Kit turns on password protection and redirects to HTTPS.
+
+Set these config vars in the Heroku app:
+
+| Name | Required | Purpose |
+| --- | --- | --- |
+| `PASSWORD` | Yes | Password participants enter to view the prototype. Without it the site shows an error page. |
+| `ORDNANCE_SURVEY_API_KEY` | Yes, for the map | Ordnance Survey API key used for the site-boundary map. |
+
+Heroku deploys automatically when changes are pushed to `main`.
