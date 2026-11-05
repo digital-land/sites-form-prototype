@@ -5,7 +5,131 @@
 require('dotenv').config()
 
 const govukPrototypeKit = require('govuk-prototype-kit')
+const https = require('node:https')
 const router = govukPrototypeKit.requests.setupRouter()
+
+const osMapApiOrigin = 'https://api.os.uk'
+const osMapProxyPath = '/os-map-proxy'
+const osMapResourcePathPrefix = '/maps/vector/ngd/ota/v1/collections/ngd-base'
+const osMapStylePath = `${osMapResourcePathPrefix}/styles/light-3857`
+
+function getOsMapResponse(url) {
+  return new Promise((resolve, reject) => {
+    const request = https.get(url, response => resolve(response))
+    request.setTimeout(15000, () => request.destroy(new Error('Map request timed out')))
+    request.on('error', reject)
+  })
+}
+
+function getOsMapResourcePath(pathname) {
+  const proxyPathPrefix = `${osMapProxyPath}/`
+  if (!pathname.startsWith(proxyPathPrefix)) return null
+
+  const pathSegments = pathname.slice(proxyPathPrefix.length).split('/')
+  let decodedSegments
+  try {
+    decodedSegments = pathSegments.map(segment => decodeURIComponent(segment))
+  } catch {
+    return null
+  }
+
+  if (
+    decodedSegments.some(segment =>
+      !segment ||
+      segment === '.' ||
+      segment === '..' ||
+      /[\/\\\u0000-\u001f]/.test(segment)
+    ) ||
+    `/${decodedSegments.slice(0, 7).join('/')}` !== osMapResourcePathPrefix ||
+    decodedSegments.length <= 7
+  ) {
+    return null
+  }
+
+  const resource = decodedSegments.slice(7).join('/')
+  const isStyleResource = /^styles\/light-3857(?:\/sprites\/sprite(?:@2x)?(?:\.(?:json|png))?|\/fonts\/[^/]+\/(?:\d+-\d+|\{range\})\.pbf)?$/.test(resource)
+  const isTile = /^tiles\/3857\/\d+\/\d+\/\d+$/.test(resource)
+  if (!isStyleResource && !isTile) return null
+
+  return `/${decodedSegments.map(segment => encodeURIComponent(segment)).join('/')}`
+}
+
+function adaptOsMapStyle(style, proxyOrigin) {
+  const source = style.sources?.['ngd-base']
+  if (source?.type !== 'vector' || typeof source.url !== 'string') {
+    throw new Error('Unexpected NGD map source')
+  }
+  const sourceUrl = new URL(source.url)
+  if (sourceUrl.origin !== osMapApiOrigin || sourceUrl.pathname !== `${osMapResourcePathPrefix}/tiles/3857`) {
+    throw new Error('Unexpected NGD map source')
+  }
+
+  source.tiles = [`${proxyOrigin}${osMapProxyPath}${osMapResourcePathPrefix}/tiles/3857/{z}/{y}/{x}`]
+  delete source.url
+
+  for (const property of ['sprite', 'glyphs']) {
+    const resourceUrl = new URL(style[property])
+    if (
+      resourceUrl.origin !== osMapApiOrigin ||
+      !getOsMapResourcePath(`${osMapProxyPath}${resourceUrl.pathname}`)
+    ) {
+      throw new Error(`Unexpected NGD ${property} resource`)
+    }
+    style[property] = `${proxyOrigin}${osMapProxyPath}${resourceUrl.pathname.replaceAll('%7B', '{').replaceAll('%7D', '}')}`
+  }
+  return style
+}
+
+async function proxyOsMapRequest(req, res) {
+  const apiKey = process.env.ORDNANCE_SURVEY_API_KEY?.trim()
+  if (!apiKey) {
+    return res.status(503).send('Map service is not configured.')
+  }
+
+  const requestUrl = new URL(req.originalUrl, 'http://localhost')
+  const resourcePath = getOsMapResourcePath(requestUrl.pathname)
+  if (!resourcePath) {
+    return res.status(404).send('Map resource not found.')
+  }
+
+  const upstreamUrl = new URL(resourcePath, osMapApiOrigin)
+  for (const [name, value] of requestUrl.searchParams) {
+    if (!['key', 'srs'].includes(name.toLowerCase())) {
+      upstreamUrl.searchParams.append(name, value)
+    }
+  }
+  upstreamUrl.searchParams.set('key', apiKey)
+
+  try {
+    const response = await getOsMapResponse(upstreamUrl)
+    if (response.statusCode >= 300 && response.statusCode < 400) {
+      response.resume()
+      return res.status(502).send('Map resource is unavailable.')
+    }
+    if (!response.statusCode || response.statusCode < 200 || response.statusCode >= 300) {
+      const status = response.statusCode || 502
+      response.resume()
+      return res.status(status).send('Map resource is unavailable.')
+    }
+
+    const chunks = []
+    for await (const chunk of response) chunks.push(chunk)
+    const body = Buffer.concat(chunks)
+    const isStyle = resourcePath === osMapStylePath
+    const result = isStyle
+      ? JSON.stringify(adaptOsMapStyle(JSON.parse(body.toString('utf8')), `${req.protocol}://${req.get('host')}`))
+      : body
+    res.set({
+      'Content-Type': isStyle ? 'application/json' : response.headers['content-type'] || 'application/octet-stream',
+      'Cache-Control': isStyle ? 'no-store' : response.headers['cache-control'] || 'public, max-age=300',
+      'X-Content-Type-Options': 'nosniff'
+    })
+    return res.send(result)
+  } catch (error) {
+    console.error('Ordnance Survey map request failed:', error.name)
+    return res.status(502).send('Map resource is unavailable.')
+  }
+}
 
 // Routes with branching logic
 router.post('/their-organisation', (req, res, next) => {
@@ -43,17 +167,21 @@ router.post('/find-address', (req, res, next) => {
 router.get('/site-boundary', mapHandler)
 router.post('/site-boundary', mapHandler)
 
-async function mapHandler(req, res, next) {
+function mapHandler(req, res, next) {
   const lpaDetails = 
     {
       curie: 'statistical-geography:E60000182'
     }
 
   res.render('site-boundary', {
-    osMapsApiKey: process.env.ORDNANCE_SURVEY_API_KEY,
+    osMapsConfigured: Boolean(process.env.ORDNANCE_SURVEY_API_KEY?.trim()),
     lpaDetails
   })
 }
+
+router.get('/os-map-proxy/*', (req, res) => {
+  proxyOsMapRequest(req, res)
+})
 
 router.post('/constraint-flood-zone-1', (req, res, next) => {
   if (req.session.data['floodZone1ConstraintResponse'] === 'yes') {

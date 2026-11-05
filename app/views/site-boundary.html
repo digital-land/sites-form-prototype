@@ -25,13 +25,18 @@
       <h1 class="govuk-heading-l">{{ pageName }}</h1>
 
       <p class="govuk-body">If the site doesn't have an address you can select the site on a map.</p>
+      {% if not osMapsConfigured %}
+        <p class="govuk-body">The map is not configured. Set ORDNANCE_SURVEY_API_KEY in your local environment or .env file, then restart the prototype.</p>
+      {% endif %}
 
     </div>
   </div>
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      <div id="map"></div>
+      {% if osMapsConfigured %}
+        <div id="map"></div>
+      {% endif %}
     </div>
   </div>
 
@@ -54,24 +59,21 @@
 {% endblock %}
 
 {% block pageScripts %}
-  <!-- Defra library scripts -->
-  <script src="/plugin-assets/%40defra%2Finteractive-map/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/draw/dist/umd/index.js"></script>
-  <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/datasets/dist/umd/index.js"></script>
-  
-  <script type="module"src="/public/javascripts/map.js"></script>
+  {% if osMapsConfigured %}
+    <script src="/plugin-assets/%40defra%2Finteractive-map/dist/umd/index.js"></script>
+    <script src="/plugin-assets/%40defra%2Finteractive-map/providers/maplibre/dist/umd/index.js"></script>
+    <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/interact/dist/umd/index.js"></script>
+    <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/draw/dist/umd/index.js"></script>
+    <script src="/plugin-assets/%40defra%2Finteractive-map/plugins/datasets/dist/umd/index.js"></script>
+    <script type="module" src="/public/javascripts/map.js"></script>
+    <script>
+      window.mapConfig = {
+        lpaDetails: {{ lpaDetails | json | safe }}
+      };
 
-  <script>
-    window.mapConfig = {
-      osMapsApiKey: "{{ osMapsApiKey }}",
-      lpaDetails: {{ lpaDetails | json | safe }}
-    };
-    
-    window.onload = function() {
-      // Initialie the map
-      initialiseMap();
-    };
-  </script>
+      window.onload = function() {
+        initialiseMap();
+      };
+    </script>
+  {% endif %}
 {% endblock %}

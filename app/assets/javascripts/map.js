@@ -1,8 +1,9 @@
-import { OS_VTS_STYLE_URLS, OS_ATTRIBUTION, useOsTransformRequest } from './osMapStyle.js'
+const OS_MAP_PROXY_PATH = '/os-map-proxy'
+const OS_ATTRIBUTION = `Contains OS data © Crown copyright and database rights ${new Date().getFullYear()}`
 
 const MAP_STYLE = {
   id: 'light',
-  url: OS_VTS_STYLE_URLS.light,
+  url: `${OS_MAP_PROXY_PATH}/maps/vector/ngd/ota/v1/collections/ngd-base/styles/light-3857`,
   attribution: OS_ATTRIBUTION,
   backgroundColor: '#c5cdd0'
 }
@@ -87,7 +88,6 @@ const siteBoundaryStyle = {
 }
 
 async function initialiseMap() {
-  const transformRequest = useOsTransformRequest()
   console.log('Initialising map with config:', JSON.stringify(window.mapConfig))
   const lpaCurie = window.mapConfig.lpaDetails.curie
   const boundaryGeoJsonUrl = `/api/${lpaCurie}/boundary.geojson`
@@ -134,7 +134,23 @@ async function initialiseMap() {
     behaviour: 'inline',
     mapProvider: defra.maplibreProvider(),
     mapStyle: MAP_STYLE,
-    transformRequest,
+    transformRequest(url) {
+      const requestUrl = new URL(url, location.href)
+      if (requestUrl.pathname.startsWith(`${OS_MAP_PROXY_PATH}/`)) {
+        return { url: new URL(`${requestUrl.pathname}${requestUrl.search}`, location.href).toString() }
+      }
+      if (requestUrl.origin === 'https://api.os.uk') {
+        const proxyUrl = new URL(OS_MAP_PROXY_PATH, location.href)
+        proxyUrl.pathname += requestUrl.pathname
+        for (const [name, value] of requestUrl.searchParams) {
+          if (name.toLowerCase() !== 'key' && name.toLowerCase() !== 'srs') {
+            proxyUrl.searchParams.append(name, value)
+          }
+        }
+        return { url: proxyUrl.toString() }
+      }
+      return { url }
+    },
     center: [-1.6, 53.1],
     zoom: 6,
     hasExitButton: true,

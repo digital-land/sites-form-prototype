@@ -24,7 +24,7 @@ You’ll need Node.js 26 and npm installed. If you use nvm, run `nvm use` to pic
    cp .env.example .env
    ```
 
-   Replace the placeholder value for `ORDNANCE_SURVEY_API_KEY` in `.env` with your Ordnance Survey API key. This is used for the site-boundary map.
+   Replace the placeholder values for `ORDNANCE_SURVEY_API_SECRET` and `ORDNANCE_SURVEY_API_KEY` in `.env` with your Ordnance Survey credentials. The site-boundary map uses the OS Maps NGD API through a server-side proxy; the API key is not sent to the browser.
 
 3. Start the development server:
 
