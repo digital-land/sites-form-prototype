@@ -14,6 +14,6 @@
     "dotenv": "^17.4.2",
     "express-async-handler": "^1.2.0",
     "govuk-frontend": "6.5.1",
-    "govuk-prototype-kit": "14.0.1"
+    "govuk-prototype-kit": "14.0.3"
   }
 }
