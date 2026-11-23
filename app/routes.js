@@ -179,7 +179,7 @@ function mapHandler(req, res, next) {
   })
 }
 
-router.get('/os-map-proxy/*', (req, res) => {
+router.get('/os-map-proxy/*path', (req, res) => {
   proxyOsMapRequest(req, res)
 })
 
